@@ -10,8 +10,8 @@ view = Blueprint('demo-app-index', __name__)
 def home():
   locals = {}
   locals['title'] = 'Bienvenido'
-  locals['csss'] = ['dist/web.min', ]
-  locals['jss'] = ['dist/web.min']
+  # locals['csss'] = ['dist/bootstrap.min', 'dist/web.min', ]
+  # locals['jss'] = ['dist/web.min']
   return render_template('home.html', locals = locals)
 
 @view.route('/error/access/<code>', methods=['GET'])

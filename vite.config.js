@@ -8,8 +8,9 @@ export default defineConfig({
     outDir: 'static/dist',
     rollupOptions: {
       input: {
-        demo: resolve(__dirname, 'src/main.jsx'),
+        base: resolve(__dirname, 'src/main.jsx'),
         web: resolve(__dirname, 'src/entries/web.jsx'),
+        error: resolve(__dirname, 'src/entries/error.jsx'),
         //admin: resolve(__dirname, 'src/admin.jsx'),
         //user: resolve(__dirname, 'src/user.jsx'),
       },
