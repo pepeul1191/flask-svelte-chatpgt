@@ -1,7 +1,36 @@
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #FEFEFE;
+h1{
+  font-size: 50px;
+}
+
+.half-height {
+  height: 50vh;
+}
+
+.background{
+  padding-top: 40px;
+  background-color: red;
+}
+
+.btn{
+  margin-top: 10px;
+  border-radius: 0px;
+}
+
+.btn i{
+  margin-right: 5px;
+}
+
+@media (min-width: 768px) {
+  .error-heading{
+    margin-top: 16%;
+  }
+}
+@media (max-width: 768px) {
+  .error-heading{
+    margin-top: 26%;
+  }
+}
+
+.error-heading{
+  font-size: 100px;
 }

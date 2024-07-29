@@ -18,5 +18,8 @@ def home():
 def error_access(code):
   # lang = session_language(session)
   # locals_dic = { }
-  # return render_template('demo/index.html', locals=locals_dic)
-  return 'Recurso no encontrado', code
+  locals = {}
+  locals['title'] = 'Recurso no encontrado'
+  locals['code'] = code
+  return render_template('error.html', locals=locals)
+  # return 'Recurso no encontrado', code
