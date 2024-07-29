@@ -26,3 +26,4 @@ dist-ssr
 # python
 env
 __pycache__
+static/uploads
