@@ -11,6 +11,7 @@ export default defineConfig({
         base: resolve(__dirname, 'src/main.jsx'),
         web: resolve(__dirname, 'src/entries/web.jsx'),
         error: resolve(__dirname, 'src/entries/error.jsx'),
+        access: resolve(__dirname, 'src/entries/access.jsx'),
         //admin: resolve(__dirname, 'src/admin.jsx'),
         //user: resolve(__dirname, 'src/user.jsx'),
       },
