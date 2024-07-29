@@ -1,0 +1,10 @@
+flask
+Jinja2
+gunicorn
+pylint
+requests
+pyyaml
+python-dotenv
+SQLAlchemy
+mongoengine
+Pillow
