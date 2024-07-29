@@ -14,9 +14,9 @@ export default defineConfig({
         //user: resolve(__dirname, 'src/user.jsx'),
       },
       output: {
-        entryFileNames: '[name].js',
-        chunkFileNames: '[name].js',
-        assetFileNames: '[name][extname]',
+        entryFileNames: '[name].min.js',
+        chunkFileNames: '[name].min.js',
+        assetFileNames: '[name].min[extname]',
       },
     },
   },
