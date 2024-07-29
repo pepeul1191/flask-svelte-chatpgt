@@ -9,6 +9,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         demo: resolve(__dirname, 'src/main.jsx'),
+        web: resolve(__dirname, 'src/entries/web.jsx'),
         //admin: resolve(__dirname, 'src/admin.jsx'),
         //user: resolve(__dirname, 'src/user.jsx'),
       },
