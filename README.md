@@ -40,30 +40,9 @@ Backup SQLite
 
     $ sqlite3 app.db .dump > dbname.bak
 
-Ubuntu ruby sequel con sqlite3
+Ejecutar la aplicación con Gunicorn:
 
-    $ sudo apt install ruby-dev
-    $ sudo apt install libsqlite3-dev
-
-Ejecutar la aplicación desde <b>config.ru</b>:
-
-    $ rackup
-
-Tareas de <b>Rakefile</b>
-
-    $ rake {task name}
-
-Ejecutar con rerun:
-
-    $ rake dev:start
-
-Sinatra Boilerplate PP:
-
-    https://github.com/pepeul1191/sinatra-boilerplate-4
-
-React PP:
-
-    https://github.com/pepeul1191/react-rollup
+    $ gunicorn app:APP -w 6 -b 0.0.0.0:5000 --reload
 
 MongoDB:
 

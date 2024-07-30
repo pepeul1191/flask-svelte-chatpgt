@@ -1,32 +1,30 @@
 {
-  "name": "vrpp",
+  "name": "svelte-app",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "vite": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "dev": "npx nodemon & python main.py"
-  },
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "bootstrap": "^5.3.2",
-    "react-bootstrap": "^2.9.1",
-    "react-router-dom": "^6.2.1",
-    "font-awesome": "^4.7.0"
+    "build": "rollup -c",
+    "dev": "rollup -c -w & python app.py",
+    "svelte": "rollup -c -w", 
+    "start": "sirv public --no-clear",
+    "dbmate:new": "npx dbmate -d \"db/migrations\" -e \"DB\" new ",
+    "dbmate:up": "npx dbmate -d \"db/migrations\" -e \"DB\" up",
+    "dbmate:rollback": "npx dbmate -d \"db/migrations\" -e \"DB\" rollback"
   },
   "devDependencies": {
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.3",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.7",
-    "nodemon": "^3.1.4",
-    "vite": "^5.3.4"
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "rollup": "^3.15.0",
+    "rollup-plugin-css-only": "^4.3.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelt e": "^7.1.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "sirv-cli": "^2.0.0",
+    "svelte": "^4.2.18",
+    "svelte-routing": "^2.13.0"
   }
 }
