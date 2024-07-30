@@ -235,3 +235,11 @@ footer{
 }
 
 .sidebar-link{}
+
+.text-success{
+    color: #198754;
+}
+
+.text-danger{
+    color: #dc3545;
+}

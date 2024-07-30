@@ -33,7 +33,7 @@ def validate():
 def create():
   try:
     data = request.get_json()
-    username = data.get('user')
+    username = data.get('username')
     email = data.get('email')
     password = data.get('password')
     # validte

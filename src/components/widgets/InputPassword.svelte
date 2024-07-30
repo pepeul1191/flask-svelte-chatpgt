@@ -8,7 +8,7 @@
   export let validations = [];
   export let onInputValidation = true;
   export let isValid = true;
-  let message = '';
+  export let message = '';
 
   const dispatch = createEventDispatcher();
 

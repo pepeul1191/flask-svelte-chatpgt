@@ -45,10 +45,6 @@
         <div class="card-body">
           <form>
             <div class="mb-3">
-              <!-- 
-              <label for="username" class="form-label">Usuario</label>
-              <input type="text" class="form-control" id="username" required bind:value={user}>
-              -->
               <InputText 
                 id="username" 
                 label="Usuario" 

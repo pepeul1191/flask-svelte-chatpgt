@@ -5,6 +5,7 @@
   import InputText from '../../widgets/InputText.svelte';
   import InputPassword from '../../widgets/InputPassword.svelte';
   import InputEmail from '../../widgets/InputEmail.svelte';
+  import { createUser } from '../../../services/user_service.js';
 
   let message = '';
   let messageClass = '';
@@ -32,7 +33,39 @@
       password1Input.isValid && 
       password2Input.isValid
     ){
-      alert('AJAX');
+      if(password1 == password2){
+        let data = {
+          username: username,
+          email: email, 
+          password: password1,
+        };
+        createUser(data).then((resp) => {
+          //console.log(resp)
+          message = resp.data;
+          messageClass = 'text-success';
+          setTimeout(() => {
+            message = '';
+            messageClass = '';
+          }, 4000);
+        }).catch((resp) =>  {
+          //console.log(resp)
+          message = resp.data;
+          messageClass = 'text-danger';
+          setTimeout(() => {
+            message = '';
+            messageClass = '';
+          }, 4000);
+        })
+      }else{
+        password1Input.isValid = false; 
+        password1Input.message = ''; 
+        password2Input.isValid = false;
+        password2Input.message = 'Contraseñas deben de coincidir';
+        setTimeout(() => {
+          password1Input.isValid = true; 
+          password2Input.isValid = true;
+        }, 4000);
+      }
     }
   }
 </script>
