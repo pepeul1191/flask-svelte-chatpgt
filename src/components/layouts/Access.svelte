@@ -8,7 +8,6 @@
 </script>
   
 <style>
-  
 </style>
   
 <Router basepath="{basepath}">

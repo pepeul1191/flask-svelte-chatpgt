@@ -2,9 +2,11 @@
   import { onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   import Logo from '../../svgs/Logo.svelte';
+  import InputText from '../../widgets/InputText.svelte';
+  import InputPassword from '../../widgets/InputPassword.svelte';
 
-  let user = '';
-  let password = '';
+  let username = ''; let usernameInput;
+  let password = ''; let passwordInput;
   let message = '';
   let messageClass = '';
   
@@ -14,24 +16,14 @@
 
   const access = (event) => {
     event.preventDefault();
-    if(user != '' && password != ''){
-      let founded = false;
-      users.forEach(userTemp => {
-        if(userTemp.user == user && userTemp.password == password){
-          founded = true;
-        }
-      });
-      if(founded){
-        messageClass = 'text-success'
-        window.location.href = '/admin';
-        message = 'Usuario encontrado';
-      }else{
-        messageClass = 'text-danger'
-        message = 'Usuario no encontrado';
-      }
-    }else{
-      messageClass = 'text-danger'
-      message = 'Debe de llenar el formulario';
+    // run validations
+    usernameInput.validate();
+    passwordInput.validate();
+    console.log(usernameInput.isValid)
+    console.log(passwordInput.isValid)
+    // if ok, ajax
+    if(usernameInput.isValid && passwordInput.isValid){
+      alert('AJAX');
     }
   }
 </script>
@@ -55,12 +47,32 @@
         <div class="card-body">
           <form>
             <div class="mb-3">
+              <!-- 
               <label for="username" class="form-label">Usuario</label>
               <input type="text" class="form-control" id="username" required bind:value={user}>
+              -->
+              <InputText 
+                id="username" 
+                label="Usuario" 
+                bind:value={username} 
+                bind:this={usernameInput}
+                onInputValidation={false}
+                validations = {[
+                  {type: 'notEmpty', message: 'Ingresar un usuario'},
+                  {type: 'minLength', message: 'Mínimo 5 caracteres', length: 5},
+                  {type: 'maxLength', message: 'Máximo 20 caracteres', length: 20},
+                ]} />
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="password" required bind:value={password}>
+              <InputPassword 
+                id="password" 
+                label="Contraseña" 
+                bind:value={password} 
+                bind:this={passwordInput}
+                onInputValidation={false}
+                validations = {[
+                  {type: 'notEmpty', message: 'Ingresar una contraseña'},
+                ]} />
             </div>
             <button  class="btn btn-primary w-100" on:click={access}>Ingresar</button>
           </form>
