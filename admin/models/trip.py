@@ -11,7 +11,7 @@ class Trip(Document):
   tracks = ListField(EmbeddedDocumentField(Track))
   pictures = ListField(EmbeddedDocumentField(Picture))
   meta = {
-    'collection': 'trips'  # Nombre de la colección a la que deseas mapear
+    'collection': 'trips'  # Nombre deObjectIdField la colección a la que deseas mapear
   }
   @classmethod
   def from_map(cls, map):

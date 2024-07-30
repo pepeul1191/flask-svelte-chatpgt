@@ -16,13 +16,10 @@ class SignIn extends Component {
         user: '',
         password: '',
         password2: '',
-        dni: '',
-        code: ''
+        email: '',
       },
       isValid:{
         email: true,
-        dni: true,
-        code: true,
         user: true,
         password1: true,
         password2: true,
@@ -30,8 +27,7 @@ class SignIn extends Component {
       validJWT: false,
       codeMessege: '',
       errors: {
-        dni: '',
-        code: '',
+        email: '',
         user: '',
         password1: '',
         password2: '',
@@ -152,7 +148,8 @@ class SignIn extends Component {
         }
         break;
       case 'email':
-        errors.email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : 'Ingrese un correo electrónico válido';
+        state.errors.email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : 'Ingrese un correo electrónico válido';
+        state.isValid.email = state.errors.email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
         break;
       case 'user':
         break;
@@ -166,32 +163,33 @@ class SignIn extends Component {
     event.preventDefault();
     if (this.validateForm()) {
       let state = { ...this.state };
-      createFromLogin(state.form).then(data => {
-        console.log(data);
-        if (data.success == true){
-          this.setState({ 
-            message: data.message, 
-            messageClass: 'text-success' 
+      createFromLogin(state.form).then(response => {
+        if (!response.ok) {
+          // Leer el texto de la respuesta en caso de error
+          return response.text().then(errorText => {
+            this.setState({
+              message: errorText,
+              messageClass: 'text-danger'
+            });
           });
-          setTimeout(() => {
-            this.setState({ message: '', messageClass: '' });
-          }, 6000);
-        }else{
-          this.setState({ 
-            message: data.message, 
-            messageClass: 'text-danger' 
-          });
-          setTimeout(() => {
-            this.setState({ message: '', messageClass: '' });
-          }, 6000);
         }
+        // Leer el texto de la respuesta en caso de éxito
+        return response.text().then(successText => {
+          this.setState({
+            message: successText,
+            messageClass: 'text-success'
+          });
+        });
       })
       .catch(error => {
         console.error("Error:", error);
-        this.setState({ 
-          message: error.message, 
-          messageClass: 'text-danger' 
+        this.setState({
+          message: error.message,
+          messageClass: 'text-danger'
         });
+      })
+      .finally(() => {
+        // Limpiar el mensaje después de 6 segundos
         setTimeout(() => {
           this.setState({ message: '', messageClass: '' });
         }, 6000);
@@ -213,40 +211,18 @@ class SignIn extends Component {
           </div>
           <Form onSubmit={this.submit} style={{ width: '300px' }} className="row" >
             <Col>
-              <Row className="mt-2" style={{ paddingLeft: '10px', paddingRight: '10px' }}>
-                <Col>
-                  <div className="left-aligned-content" style={{ marginRight: '5px' }}>
-                    <Form.Group controlId="formDNI">
-                      <Form.Label>DNI</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese su DNI"
-                        value={form.dni}
-                        onChange={(e) => this.handleChange('dni', e.target.value)}
-                        ref={this.userInputRef}
-                        className={!isValid.dni ? 'is-invalid' : ''}
-                      />
-                      {!isValid.dni ? <Form.Text className="text-danger">{errors.dni}</Form.Text> : ''}
-                    </Form.Group>
-                  </div>
-                </Col>
-                <Col>
-                  <div className="left-aligned-content" style={{ marginLeft: '5px' }}>
-                    <Form.Group controlId="formCode">
-                      <Form.Label>Código</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese su código"
-                        value={form.code}
-                        onChange={(e) => this.handleChange('code', e.target.value)}
-                        ref={this.userInputRef} 
-                        className={!isValid.code ? 'is-invalid': ''}
-                      />
-                    </Form.Group>
-                    {!isValid.code ? <Form.Text className="text-danger">{errors.code}</Form.Text> : ''}
-                  </div>
-                </Col>
-              </Row>
+              <Form.Group controlId="formEmail" className="mt-1">
+                <Form.Label>Correo</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese su correo"
+                  value={form.email}
+                  onChange={(e) => this.handleChange('email', e.target.value)}
+                  className={!isValid.email ? 'is-invalid': ''}
+                  ref={this.emailInputRef}
+                />
+              </Form.Group>
+              {!isValid.email ? <Form.Text className="text-danger">{errors.email}</Form.Text> : ''}
               <Form.Group controlId="formUser" className="mt-1">
                 <Form.Label>Usuario</Form.Label>
                 <Form.Control

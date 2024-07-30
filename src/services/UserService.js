@@ -6,6 +6,7 @@ export const validate = (user, password) => {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer yourAccessTokenHere',
+      'RESTClient': 'webapp',
     },
     body: JSON.stringify({
       user: user,
@@ -36,25 +37,31 @@ export const createFromLogin = (form) => {
       'Authorization': 'Bearer yourAccessTokenHere',
     },
     body: JSON.stringify({
-      dni: form.dni,
-      user: form.user,
-      code: form.code,
+      username: form.user,
       password: form.password,
+      email: form.email,
     })
   };
   // do request
-  return fetch(`${BASE_URL}user/login-create`, requestOptions)
-    .then(response => {
-      if (!response.ok) {
-        return response.text().then(errorText => {
-          console.error(response.status, errorText);
-          throw new Error('Ha ocurrido un error no controlado');
-        });
-      } 
-      return response.json();
-    })
+  return fetch(`${BASE_URL}user/create`, requestOptions)
+  .then(response => {
+    if (!response.ok) {
+      // Si la respuesta no es exitosa, lanzar un error
+      return response.text().then(errorText => {
+        console.error('Error en la respuesta:', errorText);
+        throw new Error(errorText);
+      });
+    }
+    // Analizar la respuesta JSON si es exitosa
+    return response;
+  })
+  .then(data => {
+    console.log('Respuesta recibida:', data);
+    return data;
+  })
     .catch(error => {
-      throw error; // Re-lanzar el error para manejarlo en el componente
+      console.log('CATCH')
+      throw error;
     });
 };
 

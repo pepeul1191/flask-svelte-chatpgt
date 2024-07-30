@@ -8,7 +8,7 @@ def to_dict(document):
 
 def db_connect():
   connect(
-    db='atoq',
+    db='chatsv2',
     username='',
     password='',
     host='localhost',

@@ -18,6 +18,6 @@ elif ENV == 'ulima':
   }
 else:
   CONSTANTS = {
-    'base_url': 'http://ulima.edu.pex/',
+    'base_url': 'http://localhost:5000/',
     'static_url': 'http://localhost:5000/',
   }
