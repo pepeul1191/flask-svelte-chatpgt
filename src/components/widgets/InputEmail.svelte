@@ -1,9 +1,10 @@
+<svelte:options accessors={true} />
 <script>
   export let value = "";
   export let label = "";
   export let id = "";
   export let validations = [];
-  let isValid = true;
+  export let isValid = true;
   let message = '';
 
   export const validate = () => {
@@ -27,22 +28,7 @@
           isValid = true;
         }
       }
-      /*
-      if(isValid && validation.type == 'custom'){
-        validation.func(value).then(resp => {
-          if(resp == false){
-            validationMessage = validation.message;
-            valid = false;
-            validationMessageClass = 'text-danger';
-          }else{
-            validationMessage = '';
-            validationMessageClass = '';
-            valid = true;
-          }
-        });
-      }
-      */
-      if(isValid && validation.type == 'email'){
+      if(isValid && validation.type == 'validEmail'){
         var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(regex.test(value) == false){
           message = validation.message || 'Correo no válido';

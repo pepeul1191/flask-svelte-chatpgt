@@ -2,13 +2,25 @@
   import { onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   import Logo from '../../svgs/Logo.svelte';
+  import InputEmail from '../../widgets/InputEmail.svelte';
   
   let message = '';
   let messageClass = '';
+  let email = ''; let emailInput;
 
   onMount(() => {
 
   });
+
+  const reset = (event) => {
+    event.preventDefault();
+    // run validations
+    emailInput.validate();
+    // if ok, ajax
+    if(emailInput.isValid){
+      alert('AJAX');
+    }
+  }
 </script>
 <style></style>
 
@@ -29,10 +41,18 @@
         <div class="card-body">
           <form>
             <div class="mb-3">
-              <label for="email" class="form-label">Correo Electrónico</label>
-              <input type="email" class="form-control" id="email" required>
+              <InputEmail 
+                id="email" 
+                label="Correo Electrónico" 
+                bind:value={email} 
+                bind:this={emailInput}
+                onInputValidation={true}
+                validations = {[
+                  {type: 'notEmpty', message: 'Ingresar un correo'},
+                  {type: 'validEmail', message: 'Correo no válido'},
+                ]} />
             </div>
-            <button type="submit" class="btn btn-primary w-100">Enviar Correo</button>
+            <button type="submit" on:click={reset} class="btn btn-primary w-100">Enviar Correo</button>
           </form>
           <div class="text-center mt-3 {messageClass}">
             {message}

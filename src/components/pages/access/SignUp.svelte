@@ -2,13 +2,39 @@
   import { onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   import Logo from '../../svgs/Logo.svelte';
+  import InputText from '../../widgets/InputText.svelte';
+  import InputPassword from '../../widgets/InputPassword.svelte';
+  import InputEmail from '../../widgets/InputEmail.svelte';
 
   let message = '';
   let messageClass = '';
+
+  let username = ''; let usernameInput;
+  let email = ''; let emailInput;
+  let password1 = ''; let password1Input;
+  let password2 = ''; let password2Input;
   
   onMount(() => {
 
   });
+
+  const create = (event) => {
+    event.preventDefault();
+    // run validations
+    usernameInput.validate();
+    emailInput.validate();
+    password1Input.validate();
+    password2Input.validate();
+    // if ok, ajax
+    if(
+      usernameInput.isValid && 
+      emailInput.isValid && 
+      password1Input.isValid && 
+      password2Input.isValid
+    ){
+      alert('AJAX');
+    }
+  }
 </script>
 <style></style>
 
@@ -29,22 +55,59 @@
         <div class="card-body">
           <form>
             <div class="mb-3">
-              <label for="username" class="form-label">Usuario</label>
-              <input type="text" class="form-control" id="username" required>
+              <InputText 
+                id="username" 
+                label="Usuario" 
+                bind:value={username} 
+                bind:this={usernameInput}
+                onInputValidation={true}
+                validations = {[
+                  {type: 'notEmpty', message: 'Ingresar un usuario'},
+                  {type: 'minLength', message: 'Mínimo 5 caracteres', length: 5},
+                  {type: 'maxLength', message: 'Máximo 20 caracteres', length: 20},
+                ]} />
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Correo Electrónico</label>
-              <input type="email" class="form-control" id="email" required>
+              <InputEmail 
+                id="email" 
+                label="Correo Electrónico" 
+                bind:value={email} 
+                bind:this={emailInput}
+                onInputValidation={true}
+                validations = {[
+                  {type: 'notEmpty', message: 'Ingresar un correo'},
+                  {type: 'validEmail', message: 'Correo no válido'},
+                ]} />
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="password" required>
+              <InputPassword 
+                id="password1" 
+                label="Contraseña" 
+                bind:value={password1} 
+                bind:this={password1Input}
+                onInputValidation={true}
+                validations = {[
+                  {type: 'notEmpty', message: 'Ingresar una contraseña'},
+                  {type: 'minLength', message: 'Mínimo 5 caracteres', length: 5},
+                  {type: 'maxLength', message: 'Máximo 20 caracteres', length: 20},
+                  {type: 'isSecure', message: 'Contraseña no segura'},
+                ]} />
             </div>
             <div class="mb-3">
-              <label for="confirm-password" class="form-label">Confirmar Contraseña</label>
-              <input type="password" class="form-control" id="confirm-password" required>
+              <InputPassword 
+                id="password2" 
+                label="Repetir Contraseña" 
+                bind:value={password2} 
+                bind:this={password2Input}
+                onInputValidation={true}
+                validations = {[
+                  {type: 'notEmpty', message: 'Ingresar una contraseña'},
+                  {type: 'minLength', message: 'Mínimo 5 caracteres', length: 5},
+                  {type: 'maxLength', message: 'Máximo 20 caracteres', length: 20},
+                  {type: 'isSecure', message: 'Contraseña no segura'},
+                ]} />
             </div>
-            <button type="submit" class="btn btn-primary w-100">Crear</button>
+            <button type="submit" class="btn btn-primary w-100" on:click={create}>Crear Cuenta</button>
           </form>
           <div class="text-center mt-3 {messageClass}">
             {message}

@@ -19,8 +19,6 @@
     // run validations
     usernameInput.validate();
     passwordInput.validate();
-    console.log(usernameInput.isValid)
-    console.log(passwordInput.isValid)
     // if ok, ajax
     if(usernameInput.isValid && passwordInput.isValid){
       alert('AJAX');
@@ -59,8 +57,6 @@
                 onInputValidation={false}
                 validations = {[
                   {type: 'notEmpty', message: 'Ingresar un usuario'},
-                  {type: 'minLength', message: 'Mínimo 5 caracteres', length: 5},
-                  {type: 'maxLength', message: 'Máximo 20 caracteres', length: 20},
                 ]} />
             </div>
             <div class="mb-3">
