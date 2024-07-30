@@ -3,6 +3,7 @@
   import { navigate } from 'svelte-routing';
   import Logo from '../../svgs/Logo.svelte';
   import InputEmail from '../../widgets/InputEmail.svelte';
+  import { resetPassword } from '../../../services/user_service.js';
   
   let message = '';
   let messageClass = '';
@@ -18,7 +19,26 @@
     emailInput.validate();
     // if ok, ajax
     if(emailInput.isValid){
-      alert('AJAX');
+      let data = {
+        email: email, 
+      };
+      resetPassword(data).then((resp) => {
+          //console.log(resp)
+          message = resp.data;
+          messageClass = 'text-success';
+          setTimeout(() => {
+            message = '';
+            messageClass = '';
+          }, 4000);
+        }).catch((resp) =>  {
+          //console.log(resp)
+          message = resp.data;
+          messageClass = 'text-danger';
+          setTimeout(() => {
+            message = '';
+            messageClass = '';
+          }, 4000);
+        })
     }
   }
 </script>
