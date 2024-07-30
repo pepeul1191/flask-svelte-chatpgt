@@ -1,19 +1,13 @@
 <script>
   import { onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
+  import Logo from '../../svgs/Logo.svelte';
 
   let user = '';
   let password = '';
   let message = '';
   let messageClass = '';
-  const users = [
-    {user: 'user1', password: 'pass1'},
-    {user: 'user2', password: 'pass2'},
-    {user: 'user3', password: 'pass3'},
-    {user: 'user4', password: 'pass4'},
-    {user: 'user5', password: 'pass5'},
-  ];
-
+  
   onMount(() => {
 
   });
@@ -41,29 +35,34 @@
     }
   }
 </script>
-<style></style>
+<style>
+
+</style>
 
 <svelte:head>
 	<title>Ingresar al Sistema</title>
 </svelte:head>
 <div class="container mt-5">
+  <div class="row justify-content-center mb-4">
+    <Logo size=48 color='#0000002d'/>
+  </div>
   <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-header">
-          <h3 class="text-center">Login</h3>
+          <h3 class="text-center">Bienvenido</h3>
         </div>
         <div class="card-body">
           <form>
             <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
+              <label for="username" class="form-label">Usuario</label>
               <input type="text" class="form-control" id="username" required bind:value={user}>
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
+              <label for="password" class="form-label">Contraseña</label>
               <input type="password" class="form-control" id="password" required bind:value={password}>
             </div>
-            <button  class="btn btn-primary w-100" on:click={access}>Login</button>
+            <button  class="btn btn-primary w-100" on:click={access}>Ingresar</button>
           </form>
           <div class="text-center mt-3 {messageClass}">
             {message}

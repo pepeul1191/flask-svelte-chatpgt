@@ -7,7 +7,9 @@
 
 </script>
   
-<style></style>
+<style>
+  
+</style>
   
 <Router basepath="{basepath}">
   <Route path="/login" component={Login} />

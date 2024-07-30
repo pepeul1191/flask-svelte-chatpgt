@@ -6,7 +6,7 @@
 
 body {
     /*font-family: 'Poppins', sans-serif;*/
-    font-size: 0.875rem;
+    font-size: 0.925rem;
     opacity: 1;
     overflow-y: scroll;
     margin: 0;
@@ -228,6 +228,10 @@ main{
 
 footer{
     background-color: #f9f9f9;
+}
+
+.form-control, .btn{
+    border-radius: 0px;
 }
 
 .sidebar-link{}
