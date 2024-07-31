@@ -25,3 +25,29 @@ def not_found(e):
       ],
     }
     return json.dumps(error), 404
+  
+def session_false(fn):
+  @wraps(fn)
+  def _session_false(*args, **kwargs):
+    # si la session es activaa, vamos a '/accesos/'
+    if CONSTANTS['session']:
+      if session.get('status') is not None:
+        if session.get('status'):
+          return redirect('/')
+      return fn(*args, **kwargs)
+    else:
+      return fn(*args, **kwargs)
+  return _session_false
+
+def session_true(fn):
+  @wraps(fn)
+  def _session_true(*args, **kwargs):
+    # si la session es activaa, vamos a '/accesos/'
+    if CONSTANTS['session']:
+      if session.get('status') is not None:
+        if not session.get('status'):
+          return redirect('/error/access/505')
+        else:
+          return redirect('/error/access/505')
+      return fn(*args, **kwargs)
+    return _session_true

@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 import os
 from flask import Blueprint, render_template
+from main.middlewares import session_false
 
 view = Blueprint('acces-view', __name__, template_folder='./templates')
 
 @view.route('/login', methods=['GET'])
 @view.route('/sign-up', methods=['GET'])
 @view.route('/reset-password', methods=['GET'])
+@session_false
 def index():
   locals = {}
   locals['title'] = 'Login'

@@ -4,6 +4,7 @@
   import Logo from '../../svgs/Logo.svelte';
   import InputText from '../../widgets/InputText.svelte';
   import InputPassword from '../../widgets/InputPassword.svelte';
+  import { validateUser } from '../../../services/user_service.js';
 
   let username = ''; let usernameInput;
   let password = ''; let passwordInput;
@@ -21,7 +22,28 @@
     passwordInput.validate();
     // if ok, ajax
     if(usernameInput.isValid && passwordInput.isValid){
-      alert('AJAX');
+      let data = {
+        username: username, 
+        password: password, 
+      };
+      validateUser(data).then((resp) => {
+          console.log(resp)
+          message = resp.data.message;
+          messageClass = 'text-success';
+          setTimeout(() => {
+            message = '';
+            messageClass = '';
+            window.location.href = resp.data.url;
+          }, 1500);
+        }).catch((resp) =>  {
+          //console.log(resp)
+          message = resp.data;
+          messageClass = 'text-danger';
+          setTimeout(() => {
+            message = '';
+            messageClass = '';
+          }, 4000);
+        })
     }
   }
 </script>

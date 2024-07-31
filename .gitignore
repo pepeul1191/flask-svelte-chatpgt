@@ -29,3 +29,4 @@ env
 __pycache__
 static/uploads
 static/fonts
+flask_session

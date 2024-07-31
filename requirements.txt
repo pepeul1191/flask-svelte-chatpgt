@@ -8,3 +8,5 @@ python-dotenv
 SQLAlchemy
 mongoengine
 Pillow
+PyJWT
+Flask-Session
