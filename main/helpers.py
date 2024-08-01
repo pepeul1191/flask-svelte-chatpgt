@@ -17,7 +17,7 @@ def scripts(jss):
   resp = ''
   if len(jss) > 0:
     for js in jss:
-      temp = ('<script type="module" src="'
+      temp = ('<script src="'
               + CONSTANTS['static_url']
               + js
               + '.js" type="text/javascript"></script>')

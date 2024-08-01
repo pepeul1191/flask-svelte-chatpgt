@@ -1,18 +1,39 @@
 <script>
   import { navigate } from 'svelte-routing';
+	import Logo from '../svgs/Logo.svelte';
 </script>
 
-<style></style>
+<style>
+
+</style>
 
 <aside id="sidebar" class="js-sidebar">
   <!-- Content For Sidebar -->
   <div class="h-100">
     <div class="sidebar-logo">
-      <a href="/">CodzSword</a>
+      <Logo size={12} color='#FFFFFF' styles={''}/>
+      <a href="/">
+        ULima Journey
+      </a>
     </div>
     <ul class="sidebar-nav">
       <li class="sidebar-header">
         Admin Elements
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" href="/" on:click|preventDefault={() => {navigate('/')}}>
+          Home
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" href="/" on:click|preventDefault={() => {navigate('/convestaion')}}>
+          Conversaiones
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" href="/" on:click|preventDefault={() => {navigate('/alert')}}>
+          Alertas
+        </a>
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link" href="/" on:click|preventDefault={() => {navigate('/')}}>

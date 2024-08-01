@@ -5,7 +5,7 @@ import os
 import traceback
 import jwt
 from datetime import datetime, timedelta
-from flask import Blueprint, request, jsonify, make_response, session
+from flask import Blueprint, request, jsonify, make_response, session, redirect
 from admin.database import db_connect
 from mongoengine import DoesNotExist
 from bson.objectid import ObjectId
@@ -79,7 +79,7 @@ def user_signout():
   session.clear()
   response = make_response(jsonify({'message': 'Logged out successfully!'}))
   response.set_cookie('authToken', '', expires=0, httponly=True, secure=True, samesite='Strict')
-  return response
+  return redirect('/')
   
 @api.route('/user/create', methods=['POST'])
 def create():
@@ -97,7 +97,7 @@ def create():
         username = username,
         password = password,
         email = email,
-        image_url = 'default.png',
+        image_url = 'assets/img/default.png',
         reset_key = '',
         activation_key = generate_random_string(20),
         updated = None,

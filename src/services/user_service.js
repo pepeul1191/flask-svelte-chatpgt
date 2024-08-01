@@ -1,13 +1,12 @@
 import axios from 'axios';
 
-export const getObjectives = (memberId) => {
+export const getSession = () => {
   return new Promise((resolve, reject) => {
-    axios.get('admin/member/objective', {
-      params: {
-        'member_id': memberId
-      },
+    axios.get('user/session', {
+      params: {},
       headers:{
-        'Origin': 'webapp',
+        'Client-Origin': 'webapp',
+        'Content-Type': 'application/json',
       }
     }).then(function (response) {
       resolve(response);

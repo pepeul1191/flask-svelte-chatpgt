@@ -6,17 +6,36 @@ import Index from '../pages/web/Index.svelte';
 import Contact from '../pages/web/Contact.svelte';
 import About from '../pages/web/About.svelte';
 export let basepath = '/';
+import { getSession } from '../../services/user_service.js';
+import Logo from '../svgs/Logo.svelte';
+
+let logged = false;
 
 onMount(() => {
-
+  getSession().then((resp) => {
+    console.log(resp)
+    logged = true;
+  }).catch((resp) =>  {
+    console.error(resp.status)
+    console.error(resp)
+  })
 });
+
+const signOut = (e) => {
+  let name = 'authToken';
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; secure; samesite=strict`;
+  window.location.replace('/user/sign-out');
+}
 </script>
 
 <style></style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
-    <a class="navbar-brand" href="/" on:click|preventDefault={() => {navigate('/')}}>Brand</a>
+    <a class="navbar-brand" href="/" on:click|preventDefault={() => {navigate('/')}}>
+      <Logo size={24} color='#0000002d'/>
+      ULima Journey
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -32,7 +51,11 @@ onMount(() => {
           <a class="nav-link" href="/contact" on:click|preventDefault={() => {navigate('/contact')}}>Contacto</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login">Acceder</a>
+          {#if logged}
+            <a class="nav-link" on:click|preventDefault={signOut} href="/user/sign-out">Salir</a>
+          {:else}
+            <a class="nav-link" href="/login">Acceder</a>
+          {/if}
         </li>
       </ul>
     </div>

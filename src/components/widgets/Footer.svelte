@@ -9,8 +9,8 @@
     <div class="row text-muted">
       <div class="col-6 text-start">
         <p class="mb-0">
-          <a href="/" class="text-muted">
-            <strong>CodzSwod</strong>
+          <a href="https://softweb.pe/" class="text-muted">
+            Powered by <strong>Software Web Perú</strong>
           </a>
         </p>
       </div>

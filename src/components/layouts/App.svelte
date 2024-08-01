@@ -7,26 +7,11 @@ import ThemeToggle from '../widgets/ThemeToggle.svelte';
 import Footer from '../widgets/Footer.svelte';
 import Home from '../pages/app/Home.svelte';
 import Level from '../pages/app/Level.svelte';
+import Profile from '../pages/app/Profile.svelte';
+import { getSession } from '../../services/user_service.js';
+import { dataStore } from '../../stores/session_stores.js';
 
-export let basepath = '/admin';
-
-const toggleRootClass = () => {
-  const current = document.documentElement.getAttribute('data-bs-theme');
-  const inverted = current === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-bs-theme', inverted);
-}
-
-const toggleLocalStorage = () => {
-  if (isLight()) {
-    localStorage.removeItem('light');
-  } else {
-    localStorage.setItem('light', 'set');
-  }
-}
-
-const isLight = () => {
-  return localStorage.getItem('light');
-}
+export let basepath = '/';
 
 onMount(() => {
   const sidebarToggle = document.querySelector('#sidebar-toggle');
@@ -34,19 +19,14 @@ onMount(() => {
     sidebarToggle.addEventListener('click', () => {
       document.querySelector('#sidebar').classList.toggle('collapsed');
     });
-  }
-
-  const themeToggle = document.querySelector('.theme-toggle');
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      toggleLocalStorage();
-      toggleRootClass();
-    });
-  }
-
-  if (isLight()) {
-    toggleRootClass();
-  }
+  }getSession().then((resp) => {
+    console.log(resp)
+    dataStore.set(resp.data.jwt);
+    console.log(dataStore)
+  }).catch((resp) =>  {
+    console.error(resp.status)
+    console.error(resp)
+  })
 });
 </script>
 
@@ -61,6 +41,7 @@ onMount(() => {
         <Router basepath="{basepath}">
           <Route path="/" component={Home} />
           <Route path="/level" component={Level} />
+          <Route path="/profile" component={Profile} />
         </Router>
       </div>
     </main>

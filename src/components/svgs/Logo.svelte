@@ -1,12 +1,13 @@
 <script>
 	export let size = 24;
 	export let color = '#000000'; // Color por defecto
+  export let styles = ''; // Color por defecto
 
 	$: sizePx = `${size}px`;
 	$: fillColor = color; // Usar la variable de color para el atributo fill
 </script>
 
-<svg width="{size}mm" height="{size}mm" version="1.1" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+<svg style="{styles}" width="{size}mm" height="{size}mm" version="1.1" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
   <g transform="translate(0,-243)">
     <g transform="matrix(.82731 0 0 .82731 -62.827 133.8)">
       <path d="m87.619 144.65 12.804 1.8899 1.8899 12.709-12.946-1.7954z" fill="{fillColor}"/>
