@@ -18,8 +18,8 @@ def ask():
     # from data
     data = request.get_json()
     question = data.get('question')  # Extraer la pregunta
-    conversation_id = ObjectId(data.get('conversation_id'))
-    name = data.get('conversation_name')
+    conversation_id = ObjectId(data.get('conversation')['_id'])
+    name = data.get('conversation')['name']
     user_id = '6707611a42e497a5badacb4b'
     # ask to chatgpt - helper
     ai_answer = openai_answer(question)
@@ -50,7 +50,7 @@ def ask():
           user_id=user_id
         )
         conversation.save()  # Guarda la nueva conversación
-      return json.dumps(answer.to_map())
+      return json.dumps(message.to_map())
     else:
       return json.dumps(ai_answer['message']), 500
   except Exception as e:

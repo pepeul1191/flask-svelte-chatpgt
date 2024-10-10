@@ -1,18 +1,20 @@
 <script>
   import axios from 'axios';
-  export let conversation_id = '';
+  import { createEventDispatcher } from 'svelte';
+  export let conversation = {};
+
   let question = '';
+  const dispatch = createEventDispatcher();
 
   const sendQuestionClick = () => {
-    // Realizar la solicitud POST
     axios.post('/api/v1/question', {
       question: question,
-      conversation_id: conversation_id,
+      conversation: conversation,
     })
     .then(response => {
-      console.log('Pregunta enviada:', response.data);
-      // Aquí puedes manejar la respuesta, como limpiar el input
-      questionInput.value = ''; // Limpiar el input
+      response.data.quiestion = question;
+      dispatch('questionSent', response.data);
+      question = '';
     })
     .catch(error => {
       console.error('Error al enviar la pregunta:', error);

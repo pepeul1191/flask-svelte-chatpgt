@@ -21,11 +21,11 @@ class Answer(EmbeddedDocument):
 
   def to_map(self):
     return {
-      'id': str(self.id),
+      '_id': str(self.id),
       'query': self.query,
       'result_set': self.result_set,
       'columns': self.columns
     }
 
   def __str__(self):
-    return f"Answer(id={self.id}, query='{self.query}', result_set={self.result_set}, columns={self.columns})"
+    return f"Answer(_id={self.id}, query='{self.query}', result_set={self.result_set}, columns={self.columns})"

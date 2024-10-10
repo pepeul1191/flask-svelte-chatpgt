@@ -25,7 +25,7 @@ class Message(Document):
 
   def to_map(self):
     return {
-      'id': str(self.id),
+      '_id': str(self.id),
       'question': self.question,
       'answer': self.answer.to_map() if self.answer else None,
       'error': self.error,
@@ -33,6 +33,6 @@ class Message(Document):
     }
 
   def __str__(self):
-    return (f"Message(id={self.id}, question='{self.question}', "
+    return (f"Message(_id={self.id}, question='{self.question}', "
         f"answer={self.answer}, error={self.error}, "
         f"created={self.created.isoformat()})")
