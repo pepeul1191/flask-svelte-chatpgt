@@ -7,6 +7,7 @@ import ThemeToggle from '../widgets/ThemeToggle.svelte';
 import Footer from '../widgets/Footer.svelte';
 import Home from '../pages/app/Home.svelte';
 import Level from '../pages/app/Level.svelte';
+import ConversationList from '../pages/app/ConverstationList.svelte';
 import Profile from '../pages/app/Profile.svelte';
 import { getSession } from '../../services/user_service.js';
 import { dataStore } from '../../stores/session_stores.js';
@@ -19,7 +20,8 @@ onMount(() => {
     sidebarToggle.addEventListener('click', () => {
       document.querySelector('#sidebar').classList.toggle('collapsed');
     });
-  }getSession().then((resp) => {
+  }
+  getSession().then((resp) => {
     console.log(resp)
     dataStore.set(resp.data.jwt);
     console.log(dataStore)
@@ -42,6 +44,7 @@ onMount(() => {
           <Route path="/" component={Home} />
           <Route path="/level" component={Level} />
           <Route path="/profile" component={Profile} />
+          <Route path="/conversations" component={ConversationList} />
         </Router>
       </div>
     </main>

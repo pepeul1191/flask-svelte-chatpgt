@@ -243,3 +243,7 @@ footer{
 .text-danger{
     color: #dc3545;
 }
+
+.btn i{
+    margin-right: 8px;
+}

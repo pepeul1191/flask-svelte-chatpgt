@@ -26,7 +26,7 @@
         </a>
       </li>
       <li class="sidebar-item">
-        <a class="sidebar-link" href="/" on:click|preventDefault={() => {navigate('/convestaion')}}>
+        <a class="sidebar-link" href="/" on:click|preventDefault={() => {navigate('/conversations')}}>
           Conversaiones
         </a>
       </li>

@@ -26,6 +26,7 @@ vite.config.js.timestamp*
 
 # python
 env
+.env
 __pycache__
 static/uploads
 static/fonts

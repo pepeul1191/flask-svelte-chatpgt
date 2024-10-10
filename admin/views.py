@@ -18,9 +18,12 @@ def index():
   return render_template('access.html', locals = locals)
 
 @view.route('/admin', methods=['GET'])
+@view.route('/conversations', methods=['GET'])
+@view.route('/conversations/new', methods=['GET'])
+@view.route('/admin', methods=['GET'])
 def admin():
   locals = {}
   locals['title'] = 'Admin'
-  locals['csss'] = []
-  locals['jss'] = ['assets/js/app']
+  locals['csss'] = ['dist/app']
+  locals['jss'] = ['dist/app']
   return render_template('admin.html', locals = locals)
