@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w & python app.py",
+    "dev": "rollup -c -w & source env/bin/activate & gunicorn app:APP -w 6 -b 0.0.0.0:5000 --reload",
     "svelte": "rollup -c -w", 
     "start": "sirv public --no-clear",
     "dbmate:new": "npx dbmate -d \"db/migrations\" -e \"DB\" new ",

@@ -10,3 +10,5 @@ mongoengine
 Pillow
 PyJWT
 Flask-Session
+langchain-openai
+SQLAlchemy>=2.0.0
