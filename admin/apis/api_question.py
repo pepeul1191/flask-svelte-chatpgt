@@ -6,6 +6,7 @@ from bson import ObjectId
 from datetime import datetime
 from admin.database import db_connect
 from flask import Blueprint, request
+from admin.models.conversation import Conversation
 from admin.models.message import Message 
 from admin.helpers.chat_helper import openai_answer
 
@@ -17,16 +18,17 @@ def ask():
     # from data
     data = request.get_json()
     question = data.get('question')  # Extraer la pregunta
-    conversation_id = data.get('conversation_id')
-    conversation_name = data.get('conversation_name')
+    conversation_id = ObjectId(data.get('conversation_id'))
+    name = data.get('conversation_name')
     user_id = '6707611a42e497a5badacb4b'
     # ask to chatgpt - helper
     ai_answer = openai_answer(question)
     if ai_answer['status'] == 'success':
       answer = ai_answer['data']
       db_connect()
+      message_id = ObjectId()
       message = Message(
-        id = ObjectId(),
+        id = message_id,
         question = question,
         answer = answer,
         error = False,
@@ -34,8 +36,20 @@ def ask():
       )
       message.save()
       # add message to conversation if conversation not exist, else, create conversation and add message
-
-      # response_data['created_at'] = now.strftime("%Y-%m-%d %H:%M:%S")
+      conversation = Conversation.objects(id=conversation_id).first()
+      if conversation:
+        conversation.name = name
+        conversation.messages.append(message_id)
+        conversation.updated = datetime.utcnow()
+        conversation.save()
+      else:
+        conversation = Conversation(
+          id=conversation_id,
+          name=name,
+          messages=[message_id],
+          user_id=user_id
+        )
+        conversation.save()  # Guarda la nueva conversación
       return json.dumps(answer.to_map())
     else:
       return json.dumps(ai_answer['message']), 500
