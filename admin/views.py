@@ -19,9 +19,16 @@ def index():
 
 @view.route('/admin', methods=['GET'])
 @view.route('/conversations', methods=['GET'])
-@view.route('/conversations/new', methods=['GET'])
 @view.route('/admin', methods=['GET'])
 def admin():
+  locals = {}
+  locals['title'] = 'Admin'
+  locals['csss'] = ['dist/app']
+  locals['jss'] = ['dist/app']
+  return render_template('admin.html', locals = locals)
+
+@view.route('/conversations/<string:conversation_id>', methods=['GET'])
+def conversation_detail(conversation_id):
   locals = {}
   locals['title'] = 'Admin'
   locals['csss'] = ['dist/app']
