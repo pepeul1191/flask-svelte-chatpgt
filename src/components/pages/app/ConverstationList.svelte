@@ -2,11 +2,13 @@
 
 import { onMount } from 'svelte';
 import { navigate } from 'svelte-routing';
-let levels = [];
+import axios from 'axios';
+
+let conversations = [];
 let generatedId;
 
 onMount(() => {
-  fetchLevels();
+  fetchAll();
   generateNewId();
 });
 
@@ -18,23 +20,19 @@ const generateNewId = () => {
   generatedId  = oid;
 };
 
-const fetchLevels = (map) => {
-  fetch(`/level/list`)
+const fetchAll = () => {
+  axios.get('/api/v1/conversations')
     .then(response => {
-      if (!response.ok) {
-        throw new Error('Error en la solicitud: ' + response.status);
-      }
-      return response.json(); // Convertir la respuesta a JSON
-    })
-    .then(data => {
-      levels = data; // Asignar la respuesta a la variable levels
+      const data = response.data;
+      console.log(data)
+      conversations = data;
     })
     .catch(error => {
-      console.error('Error en la solicitud:', error);
+      console.error('Error en listar las conversaciones del usuario:', error);
     });
 }
 
-const deleteLevel = (id) => {
+const deleteRow = (id) => {
   alert(id);
 }
 </script>
@@ -47,13 +45,12 @@ const deleteLevel = (id) => {
   
 <div class="mb-3">
   <h4>Gestión de Conversaciones</h4>
-  <a href="/conversations/{generatedId}" on:click|preventDefault={() => navigate(`/conversations/${generatedId}`)} class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i>Nueva Conversación</a>
 </div>
 <!-- Table Element -->
 <div class="card border-0">
   <div class="card-header">
     <h5 class="card-title">
-        Niveles de las rutinas
+      Conversaciones Pasadas
     </h5>
     <h6 class="card-subtitle text-muted">
     </h6>
@@ -63,20 +60,33 @@ const deleteLevel = (id) => {
       <thead>
         <tr>
           <th scope="col">Nombre</th>
+          <th scope="col">Cantidad de Mensajes</th>
+          <th scope="col">Fecha de Creación</th>
+          <th scope="col">Última Actualización</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        {#each levels as level}
+        {#each conversations as conversation}
           <tr>
-            <td>{level.name}</td>
+            <td>{conversation.name}</td>
+            <td>{conversation.message_count}</td>
+            <td>{conversation.created_at}</td>
+            <td>{conversation.updated_at}</td>
             <td>
-              <a href="/admin/level/edit/{level.id}" on:click|preventDefault={navigate(`/admin/level/edit/${level.id}`)} class="btn btn-danger">Editar</a>
-              <button on:click|preventDefault={deleteLevel(level.id)} class="btn btn-secondary">Eliminar</button>
+              <a href="/conversations/{conversation._id}" on:click|preventDefault={navigate(`/conversations/${conversation._id}`)} class="btn btn-secondary"><i class="fa fa-comments-o" aria-hidden="true"></i>Continuar</a>
+              <button on:click|preventDefault={deleteRow(conversation.id)} class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>Eliminar</button>
             </td>
           </tr>
         {/each}
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="10">
+            <a href="/conversations/{generatedId}" on:click|preventDefault={() => navigate(`/conversations/${generatedId}`)} class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i>Nueva Conversación</a>
+          </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </div>

@@ -18,7 +18,7 @@
     </div>
     <ul class="sidebar-nav">
       <li class="sidebar-header">
-        Admin Elements
+        Opciones
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link" href="/" on:click|preventDefault={() => {navigate('/')}}>
@@ -35,6 +35,7 @@
           Alertas
         </a>
       </li>
+      <!--
       <li class="sidebar-item">
         <a class="sidebar-link" href="/" on:click|preventDefault={() => {navigate('/')}}>
           Home
@@ -114,6 +115,7 @@
           </li>
         </ul>
       </li>
+      -->
     </ul>
   </div>
 </aside>

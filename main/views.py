@@ -28,5 +28,5 @@ def error_access(code):
   locals = {}
   locals['title'] = 'Recurso no encontrado'
   locals['code'] = code
-  return render_template('error.html', locals=locals)
+  return render_template('error.html', locals=locals), code
   # return 'Recurso no encontrado', code

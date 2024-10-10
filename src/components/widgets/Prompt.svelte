@@ -7,7 +7,7 @@
   const dispatch = createEventDispatcher();
 
   const sendQuestionClick = () => {
-    axios.post('/api/v1/question', {
+    axios.post('/api/v1/questions', {
       question: question,
       conversation: conversation,
     })

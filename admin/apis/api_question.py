@@ -12,7 +12,7 @@ from admin.helpers.chat_helper import openai_answer
 
 api = Blueprint('api-question', __name__)
 
-@api.route('/api/v1/question', methods=['POST'])
+@api.route('/api/v1/questions', methods=['POST'])
 def ask():
   try:
     # from data
@@ -32,7 +32,7 @@ def ask():
         question = question,
         answer = answer,
         error = False,
-        created = datetime.now()
+        created_at = datetime.now()
       )
       message.save()
       # add message to conversation if conversation not exist, else, create conversation and add message
@@ -40,7 +40,7 @@ def ask():
       if conversation:
         conversation.name = name
         conversation.messages.append(message_id)
-        conversation.updated = datetime.utcnow()
+        conversation.updated_at = datetime.utcnow()
         conversation.save()
       else:
         conversation = Conversation(

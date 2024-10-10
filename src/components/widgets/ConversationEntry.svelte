@@ -1,7 +1,9 @@
 <script>
   import { onMount } from 'svelte';
+  import * as XLSX from 'xlsx';
   
   export let message = {};
+  export let conversationId = '';
   let data = [];
   let columns = [];
   let rows = [];
@@ -41,7 +43,10 @@
   };
 
   const downloadReport = () => {
-    dispatch('downloadReport');
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'reporte');
+    XLSX.writeFile(workbook, `${conversationId} - ${new Date().getTime()}.xlsx`);
   };
 
   const handleStepChange = (event) => {
@@ -88,7 +93,7 @@
 <div class="row question-row">
   <span class="card question-card border-0 conversations">
     {message.question}<br>
-    <p class="small">{formatDate(message.created)}</p>
+    <p class="small">{formatDate(message.created_at)}</p>
   </span>
 </div>
 

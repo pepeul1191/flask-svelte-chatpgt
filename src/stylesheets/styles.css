@@ -214,7 +214,11 @@ html[data-bs-theme="light"] .theme-toggle .fa-sun {
 }
 
 .card-header, .card-body{
-    padding: 20px;
+    padding: 10px;
+}
+
+.card-title{
+    font-size: 18px;
 }
 
 .page-title{

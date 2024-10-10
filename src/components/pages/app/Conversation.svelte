@@ -60,7 +60,7 @@
 </div>
 
 {#each conversationEntries as entry}
-  <ConversationEntry message={entry}/>
+  <ConversationEntry message={entry} conversation_id={_id} />
 {/each}
 
 <Prompt 
