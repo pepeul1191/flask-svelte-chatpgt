@@ -24,10 +24,12 @@
   };
 
   const setRows = () => {
-    if (pagination.show) {
-      rows = data.slice((pagination.page - 1) * pagination.step, pagination.page * pagination.step);
-    } else {
-      rows = data;
+    rows = data.slice((pagination.page - 1) * pagination.step, pagination.page * pagination.step);
+    pagination.numberPages = Math.ceil(data.length/pagination.step);
+    if(pagination.numberPages == 1){
+      pagination.show = false;
+    }else{
+      pagination.show = true;
     }
   };
 
@@ -51,6 +53,7 @@
 
   const handleStepChange = (event) => {
     pagination.step = +event.target.value;
+    pagination.page = 1;
     setRows();
   };
 
@@ -115,7 +118,7 @@
       </tr>
       {/each}
     </tbody>
-    <tfoot>
+    <tfoot class="tfoot-area">
       <tr>
         <td colspan="20">
           <div class="row">
@@ -139,29 +142,31 @@
                 <i class="fa fa-times" aria-hidden="true" style="margin-right: 5px;"></i>Eliminar
               </button>
             </div>
-            {#if pagination.show}
-              <div class="col-sm-4" style="text-align: right;">
-                <label style="margin-right: 10px;">Filas por página:</label>
-                <select on:change={handleStepChange} value="10" class="pagination-select" style="">
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                  <option value="25">25</option>
-                  <option value="30">30</option>
-                  <option value="35">35</option>
-                  <option value="40">40</option>
-                </select>
-                {#if pagination.page !== 1}
-                  <i class="fa fa-angle-double-left footer-icon pagination-btn" on:click={goBegin} aria-hidden="true"></i>
-                  <i class="fa fa-angle-left footer-icon pagination-btn" on:click={goPrevious} aria-hidden="true"></i>
-                {/if}
-                <label class="pagination-number">{pagination.page} / {pagination.numberPages}</label>
-                {#if pagination.page !== pagination.numberPages}
-                  <i class="fa fa-angle-right footer-icon pagination-btn" on:click={goNext} aria-hidden="true"></i>
-                  <i class="fa fa-angle-double-right footer-icon pagination-btn" on:click={goLast} aria-hidden="true"></i>
-                {/if}
-              </div>
-            {/if}
+            <div class="col-sm-4 pagination-area">
+              <label style="margin-right: 10px;">Filas por página:</label>
+              <select on:change={handleStepChange} value="10" class="pagination-select" style="">
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+                <option value="35">35</option>
+                <option value="40">40</option>
+              </select>
+              {#if pagination.show}
+                <span class="pagination-buttons">
+                  {#if pagination.page !== 1}
+                    <i class="fa fa-angle-double-left footer-icon pagination-btn" on:click={goBegin} aria-hidden="true"></i>
+                    <i class="fa fa-angle-left footer-icon pagination-btn" on:click={goPrevious} aria-hidden="true"></i>
+                  {/if}
+                  <label class="pagination-number">{pagination.page} / {pagination.numberPages}</label>
+                  {#if pagination.page !== pagination.numberPages}
+                    <i class="fa fa-angle-right footer-icon pagination-btn" on:click={goNext} aria-hidden="true"></i>
+                    <i class="fa fa-angle-double-right footer-icon pagination-btn" on:click={goLast} aria-hidden="true"></i>
+                  {/if}
+                </span>
+              {/if}
+            </div>
           </div>
         </td>
       </tr>
@@ -179,6 +184,17 @@
     padding: 10px;
     padding-left: 25px;
     padding-right: 25px;
+  }
+
+  .pagination-area{
+    text-align: right;
+    padding-top: 8px;
+  }
+
+  .pagination-buttons{
+    padding-top: 3px;
+    position: relative;
+    float: right;
   }
 
   .pagination-select{
@@ -212,7 +228,7 @@
 
   .small, small {
     margin-bottom: 0px !important;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .pagination-number{
@@ -233,5 +249,10 @@
     text-align: left;
     font-size: 20px;
     font-weight: 400;
+  }
+
+  .tfoot-area{
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
   }
 </style>
