@@ -1,13 +1,16 @@
 <script>
   import { onMount } from 'svelte';
+  import axios from 'axios';
   import Prompt from "../../widgets/Prompt.svelte";
   import ConversationEntry from "../../widgets/ConversationEntry.svelte";
 
   export let _id = '';
+  let title = '';
   let conversationName = '';
   let conversationPlaceholder = '';
   let promptInstance;
   let conversationEntries = [];
+  let messages = [];
 
   onMount(() => {
     const searchTopicPlaceholders = [
@@ -27,7 +30,26 @@
     if(conversationName == ''){
       
     }
-  }); 
+    fetchOne();
+  });
+  
+  const fetchOne = () => {
+    axios.get(`/api/v1/conversations/${_id}`)
+      .then(response => {
+        const data = response.data;
+        console.log(data)
+        conversationEntries = data;
+        conversationEntries = conversationEntries;
+        title = 'Continuar';
+      })
+      .catch(error => {
+        console.log(error.response.status);
+        console.error('Error en listar las conversaciones del usuario:', error);
+        if(error.response.status == 404){
+          title = 'Nueva';
+        }
+      });
+  }
 
   const handleQuestionSent = (event) => {
     let message = event.detail;
@@ -36,11 +58,11 @@
 </script>
 
 <svelte:head>
-	<title>Nueva Conversación</title>
+	<title>{title} Conversación</title>
 </svelte:head>
 
 <div class="mb-3">
-  <h4>Nueva Conversación</h4>
+  <h4>{title} Conversación</h4>
 </div>
 
 <div class="row">

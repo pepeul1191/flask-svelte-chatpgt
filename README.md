@@ -55,29 +55,21 @@ MongoDB:
 
 Consultas MongoDB:
 
-Fetch all a un resumen de todas las conversaciones:
-
-```javascript
-db.conversations.aggregate([
-  {
-    "$project": {
-      "_id": { "$toString": "$_id" },
-      "name": 1,
-      "created_at": 1,
-      "updated_at": 1,
-      "num_messages": { "$size": "$messages" }
-    }
-  }
-])
-```
-
-Fetch a una conversación:
+Fetch all a un resumen de todas las conversaciones de un usuario por usuario_id:
 
 ```javascript
 db.conversations.aggregate([
   {
     "$match": {
-      "_id": ObjectId("6657a01ca322c35b1401b1f9")
+      "user_id": ObjectId(usuario_id) // Reemplaza con el ObjectId que deseas filtrar
+    }
+  },
+  {
+    $lookup: {
+      from: "messages", // Nombre de la colección de destino
+      localField: "messages", // Campo en la colección de `conversations`
+      foreignField: "_id", // Campo en la colección de `messages`
+      as: "message_details" // Nombre del campo de salida que contendrá los documentos unidos
     }
   },
   {
@@ -86,22 +78,53 @@ db.conversations.aggregate([
       "name": 1,
       "created_at": 1,
       "updated_at": 1,
-      "messages": {
-        "$map": {
-          "input": "$messages",
-          "as": "message",
-          "in": {
-            "_id": { "$toString": "$$message._id" },
-            "content": "$$message.content",
-            "question": "$$message.question",
-            "error": "$$message.error",
-            "created_at": "$$message.created_at",
-            "answer": {
-              "_id": { "$toString": "$$message.answer._id" },
-              "columns": "$$message.answer.columns",
-              "result_set": "$$message.answer.result_set"
-            }
-          }
+      "message_count": { $size: "$message_details" }
+    }
+  }]);
+```
+
+Fetch a una conversación:
+
+```javascript
+db.conversations.aggregate([
+  {
+    "$match": {
+      "_id": ObjectId("conversation_id")  // Reemplaza "conversation_id" con el valor real
+    }
+  },
+  {
+    "$lookup": {
+      "from": "messages",  // Nombre de la colección de destino
+      "localField": "messages",  // Campo en la colección de `conversations`
+      "foreignField": "_id",  // Campo en la colección de `messages`
+      "as": "message_details"  // Nombre del campo de salida
+    }
+  },
+  {
+    "$unwind": {
+      "path": "$message_details",
+      "preserveNullAndEmptyArrays": true  // Asegura que se conserven los documentos aunque no haya mensajes
+    }
+  },
+  {
+    "$replaceRoot": { "newRoot": "$message_details" }  // Reemplaza el documento raíz
+  },
+  {
+    "$project": {
+      "_id": 0,
+      "_id": { "$toString": "$_id" },
+      "question": 1,
+      "answer": {
+        "columns": "$answer.columns",
+        "result_set": "$answer.result_set",
+        "query": "$answer.query",
+        "_id": { "$toString": "$answer._id" }
+      },
+      "error": "$error",
+      "created_at": {
+        "$dateToString": {
+          "format": "%d/%m/%Y %H:%M:%S",
+          "date": "$created_at"
         }
       }
     }

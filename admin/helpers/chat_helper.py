@@ -35,7 +35,7 @@ def openai_answer(question):
     query = """SELECT players.name AS player_name, nations.name AS nation_name 
       FROM players 
       JOIN nations ON players.nation_id = nations.id 
-      WHERE players.sex_id = 1 LIMIT 100;"""
+      WHERE players.sex_id = 1 LIMIT 5;"""
     # do query to relational db
     columns = []
     result_set = []

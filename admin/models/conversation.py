@@ -68,3 +68,52 @@ class Conversation(Document):
     # execute aggregate
     results = cls._get_collection().aggregate(pipeline)
     return list(results)
+  
+  @classmethod
+  def conversation_messages(cls, conversation_id):
+    pipeline = [
+      {
+        "$match": {
+          "_id": ObjectId(conversation_id)  # Asegúrate de que el ID sea un ObjectId válido
+        }
+      },
+      {
+        "$lookup": {
+          "from": "messages",  # Nombre de la colección de destino
+          "localField": "messages",  # Campo en la colección de `conversations`
+          "foreignField": "_id",  # Campo en la colección de `messages`
+          "as": "message_details"  # Nombre del campo de salida
+        }
+      },
+      {
+        "$unwind": {
+          "path": "$message_details",
+          "preserveNullAndEmptyArrays": True  # Asegura que se conserven los documentos aunque no haya mensajes
+        }
+      },
+      {
+        "$replaceRoot": {"newRoot": "$message_details"}  # Reemplaza el documento raíz
+      },
+      {
+        "$project": {
+          "_id": 0,  # Elimina el campo _id del resultado
+          "question": 1,  # Incluye el campo question
+          "answer": {
+            "columns": "$answer.columns",
+            "result_set": "$answer.result_set",
+            "query": "$answer.query",
+            "_id": {"$toString": "$answer._id"}  # Convierte el _id de answer a string
+          },
+          "error": "$error",
+          "created_at": {
+            "$dateToString": {
+              "format": "%d/%m/%Y %H:%M:%S",
+              "date": "$created_at"  # Formatea la fecha
+            }
+          }
+        }
+      }
+    ]
+    # execute aggregate
+    results = cls._get_collection().aggregate(pipeline)
+    return list(results)
