@@ -24,7 +24,7 @@ def openai_answer(question):
     input_message = input_message + '\n\n' + 'en caso de que un join haya dos columnas con el mismo nombre, usar un AS para renombrarlas, ejemplo players.id,players.name, nations.id, nations.name renombrar como players.id AS player_id,players.name AS player_name, nations.id AS nation_id, nations.name AS nation_name'
     # return input_message
     ## OpenAI
-    '''
+    
     load_dotenv()
     os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY')
     llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.5)
@@ -36,6 +36,7 @@ def openai_answer(question):
       FROM players 
       JOIN nations ON players.nation_id = nations.id 
       WHERE players.sex_id = 1 LIMIT 5;"""
+    '''
     # do query to relational db
     columns = []
     result_set = []

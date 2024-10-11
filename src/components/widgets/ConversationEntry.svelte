@@ -14,9 +14,13 @@
     columns = message.answer.columns;
     data = message.answer.result_set;
     setRows();
+    if(pagination.numberPages == 1){
+      pagination.show = false;
+    }
   });
 
   let pagination = {
+    showButtons: true,
     show: true,
     step: 10,
     page: 1,
@@ -27,9 +31,9 @@
     rows = data.slice((pagination.page - 1) * pagination.step, pagination.page * pagination.step);
     pagination.numberPages = Math.ceil(data.length/pagination.step);
     if(pagination.numberPages == 1){
-      pagination.show = false;
+      pagination.showButtons = false;
     }else{
-      pagination.show = true;
+      pagination.showButtons = true;
     }
   };
 
@@ -142,6 +146,7 @@
                 <i class="fa fa-times" aria-hidden="true" style="margin-right: 5px;"></i>Eliminar
               </button>
             </div>
+            {#if pagination.show}
             <div class="col-sm-4 pagination-area">
               <label style="margin-right: 10px;">Filas por página:</label>
               <select on:change={handleStepChange} value="10" class="pagination-select" style="">
@@ -153,7 +158,7 @@
                 <option value="35">35</option>
                 <option value="40">40</option>
               </select>
-              {#if pagination.show}
+              {#if pagination.showButtons}
                 <span class="pagination-buttons">
                   {#if pagination.page !== 1}
                     <i class="fa fa-angle-double-left footer-icon pagination-btn" on:click={goBegin} aria-hidden="true"></i>
@@ -167,6 +172,7 @@
                 </span>
               {/if}
             </div>
+            {/if}
           </div>
         </td>
       </tr>
