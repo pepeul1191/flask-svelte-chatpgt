@@ -39,7 +39,8 @@
       .then(response => {
         const data = response.data;
         console.log(data)
-        conversationEntries = data;
+        conversationEntries = data.messages;
+        conversationName = data.name;
         conversationEntries = conversationEntries;
         actualQuestionIndex = conversationEntries.length;
         title = 'Continuar';

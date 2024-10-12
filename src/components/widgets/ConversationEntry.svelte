@@ -140,7 +140,7 @@
                 <i class="fa fa-download" aria-hidden="true" style="margin-right: 5px;"></i>Descargar
               </button>
               <button class="btn btn-warning" on:click={downloadReport} style="margin-right: 10px;">
-                <i class="fa fa-code" aria-hidden="true" style="margin-right: 5px;"></i>Editar
+                <i class="fa fa-code" aria-hidden="true" style="margin-right: 5px;"></i>Editar SQL
               </button>
               <button class="btn btn-danger" on:click={downloadReport} style="margin-right: 10px;">
                 <i class="fa fa-times" aria-hidden="true" style="margin-right: 5px;"></i>Eliminar

@@ -89,45 +89,73 @@ Fetch a una conversación:
 db.conversations.aggregate([
   {
     "$match": {
-      "_id": ObjectId("conversation_id")  // Reemplaza "conversation_id" con el valor real
+      "_id": ObjectId("67086aa7fecae0b7e7381844")
     }
   },
   {
     "$lookup": {
-      "from": "messages",  // Nombre de la colección de destino
-      "localField": "messages",  // Campo en la colección de `conversations`
-      "foreignField": "_id",  // Campo en la colección de `messages`
-      "as": "message_details"  // Nombre del campo de salida
+      "from": "messages",
+      "localField": "messages",
+      "foreignField": "_id",
+      "as": "message_details"
     }
   },
   {
     "$unwind": {
       "path": "$message_details",
-      "preserveNullAndEmptyArrays": true  // Asegura que se conserven los documentos aunque no haya mensajes
+      "preserveNullAndEmptyArrays": true
     }
   },
   {
-    "$replaceRoot": { "newRoot": "$message_details" }  // Reemplaza el documento raíz
+    "$group": {
+      "_id": {
+        "conversation_id": "$_id",
+        "name": "$name",
+        "created_at": {
+          "$dateToString": {
+            "format": "%d/%m/%Y %H:%M:%S",
+            "date": "$created_at"
+          }
+        },
+        "updated_at": {
+          "$dateToString": {
+            "format": "%d/%m/%Y %H:%M:%S",
+            "date": "$updated_at"
+          }
+        }
+      },
+      "messages": {
+        "$push": {
+          "answer": {
+            "columns": "$message_details.answer.columns",
+            "result_set": "$message_details.answer.result_set",
+            "query": "$message_details.answer.query",
+            "_id": { "$toString": "$message_details.answer._id" }
+          },
+          "error": "$message_details.error",
+          "question": "$message_details.question",
+          "created_at": {
+            "$dateToString": {
+              "format": "%d/%m/%Y %H:%M:%S",
+              "date": "$message_details.created_at"
+            }
+          }
+        }
+      }
+    }
   },
   {
     "$project": {
       "_id": 0,
-      "_id": { "$toString": "$_id" },
-      "question": 1,
-      "answer": {
-        "columns": "$answer.columns",
-        "result_set": "$answer.result_set",
-        "query": "$answer.query",
-        "_id": { "$toString": "$answer._id" }
-      },
-      "error": "$error",
-      "created_at": {
-        "$dateToString": {
-          "format": "%d/%m/%Y %H:%M:%S",
-          "date": "$created_at"
-        }
-      }
+      "id": { "$toString": "$_id.conversation_id"},  // Renombramos a `id`
+      "name": "$_id.name",
+      "created_at": "$_id.created_at",
+      "updated_at": "$_id.updated_at",
+      "messages": 1
     }
+  },
+  {
+    "$limit": 1
   }
 ]);
 ```
