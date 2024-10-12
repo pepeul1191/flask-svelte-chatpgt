@@ -11,6 +11,7 @@
   let promptInstance;
   let conversationEntries = [];
   let messages = [];
+  let actualQuestionIndex = 0;
 
   onMount(() => {
     const searchTopicPlaceholders = [
@@ -40,6 +41,7 @@
         console.log(data)
         conversationEntries = data;
         conversationEntries = conversationEntries;
+        actualQuestionIndex = conversationEntries.length;
         title = 'Continuar';
       })
       .catch(error => {
@@ -55,6 +57,29 @@
     let message = event.detail;
     conversationEntries = [...conversationEntries, message];
   }
+
+  const searchUp = (event) => {
+    if(actualQuestionIndex >= 0){
+      if(actualQuestionIndex - 1 > 0){
+        actualQuestionIndex--;
+        const q = conversationEntries[actualQuestionIndex].question;
+        promptInstance.question = q
+      }
+    }
+  }
+
+  const searchDown = (event) => {
+    if(actualQuestionIndex < conversationEntries.length){
+      if(actualQuestionIndex + 1 < conversationEntries.length){
+        actualQuestionIndex++;
+        const q = conversationEntries[actualQuestionIndex].question;
+        promptInstance.question = q
+      }else if(actualQuestionIndex < conversationEntries.length){
+        promptInstance.question = ''
+      }
+    }
+  }
+
 </script>
 
 <svelte:head>
@@ -88,7 +113,9 @@
 <Prompt 
   bind:this={promptInstance} 
   conversation={{_id: _id, name: conversationName}} 
-  on:questionSent={handleQuestionSent}   
+  on:questionSent={handleQuestionSent}  
+  on:searchUp={searchUp}
+  on:searchDown={searchDown} 
 />
 
 <style>

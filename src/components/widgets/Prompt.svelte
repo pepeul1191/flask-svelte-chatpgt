@@ -1,9 +1,10 @@
+<svelte:options accessors={true} />
 <script>
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
   export let conversation = {};
 
-  let question = '';
+  export let question = '';
   const dispatch = createEventDispatcher();
 
   const sendQuestionClick = () => {
@@ -21,6 +22,14 @@
       // Aquí puedes manejar el error
     });
   }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'ArrowUp') {
+      dispatch('searchUp');
+    } else if (event.key === 'ArrowDown') {
+      dispatch('searchDown');
+    }
+  }
 </script>
 
 <div class="mb-5">
@@ -33,6 +42,7 @@
       aria-describedby="button-send"
       id="question-input"
       bind:value={question} 
+      on:keydown={handleKeyDown}
     />
     <button
       class="btn btn-primary"
