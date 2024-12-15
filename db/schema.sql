@@ -1,4 +1,3 @@
-CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(128) primary key);
 CREATE TABLE play_styles (
   id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   name	VARCHAR(30)
@@ -52,7 +51,42 @@ CREATE TABLE players (
   FOREIGN KEY (nation_id) REFERENCES nations (id)
   FOREIGN KEY (team_id) REFERENCES teams (id)
 );
+CREATE TABLE common_details (
+  id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  overall INTEGER,
+  velocity INTEGER,
+  shooting INTEGER,
+  passing INTEGER,
+  dribbling INTEGER,
+  defending INTEGER,
+  physicality INTEGER,
+  player_id	INTEGER NOT NULL,
+  FOREIGN KEY (player_id) REFERENCES players (id)
+);
 
-INSERT INTO sexs (id, name) VALUES (1, 'Hombre');
-INSERT INTO sexs (id, name) VALUES (2, 'Mujer');
+CREATE TABLE goalkeeper_details (
+  id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  diving INTEGER,
+  handling INTEGER,
+  kicking INTEGER,
+  positioning INTEGER,
+  reflexes INTEGER,
+  player_id	INTEGER NOT NULL,
+  FOREIGN KEY (player_id) REFERENCES players (id)
+);
 
+CREATE TABLE players_play_styles (
+  id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  play_style_id	INTEGER NOT NULL,
+  player_id	INTEGER NOT NULL,
+  FOREIGN KEY (play_style_id) REFERENCES play_styles (id),
+  FOREIGN KEY (player_id) REFERENCES players (id)
+);
+
+CREATE TABLE players_positions (
+  id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  position_id	INTEGER NOT NULL,
+  player_id	INTEGER NOT NULL,
+  FOREIGN KEY (position_id) REFERENCES positions (id),
+  FOREIGN KEY (player_id) REFERENCES players (id)
+);

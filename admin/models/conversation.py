@@ -149,4 +149,4 @@ class Conversation(Document):
     if len(results) == 1:
       return results[0]
     else:
-      return {}
+      return None

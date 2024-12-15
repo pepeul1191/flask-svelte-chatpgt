@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMount } from 'svelte';
-import { Router, Route } from 'svelte-routing';
+import { Router, Route, useLocation } from 'svelte-routing';
 import Sidebar from '../widgets/Sidebar.svelte';
 import Navbar from '../widgets/Navbar.svelte';
 import ThemeToggle from '../widgets/ThemeToggle.svelte';
@@ -14,6 +14,12 @@ import { getSession } from '../../services/user_service.js';
 import { dataStore } from '../../stores/session_stores.js';
 
 export let basepath = '/';
+
+const location = window.location.pathname;
+console.log(location)
+console.log(location.startsWith('/conversations/'))
+$: isConversationRoute = location.startsWith('/conversations/');
+console.log(isConversationRoute)
 
 onMount(() => {
   const sidebarToggle = document.querySelector('#sidebar-toggle');
@@ -51,7 +57,9 @@ onMount(() => {
       </div>
     </main>
     <ThemeToggle />
-    <Footer />
+    {#if !isConversationRoute}
+      <Footer />
+    {/if}
   </div>
 </div>
 

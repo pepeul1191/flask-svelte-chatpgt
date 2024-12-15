@@ -57,6 +57,7 @@
   const handleQuestionSent = (event) => {
     let message = event.detail;
     conversationEntries = [...conversationEntries, message];
+    title = 'Continuar';
   }
 
   const searchUp = (event) => {
@@ -81,6 +82,9 @@
     }
   }
 
+  const updateName = () => {
+    
+  }
 </script>
 
 <svelte:head>
@@ -103,6 +107,10 @@
         aria-describedby="button-send"
         bind:value={conversationName}
       />
+      <button class="btn btn-success" id="button-send" style="width: 120px;" on:click={updateName} >
+        <i class="fa fa-check" aria-hidden="true" style="margin-right: 5px;"></i>
+        Guardar
+      </button>
     </div>
   </div>
 </div>

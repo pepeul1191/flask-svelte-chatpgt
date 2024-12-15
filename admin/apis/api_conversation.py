@@ -27,8 +27,11 @@ def fetch_user_converstion():
 def fetch_converstion_messages(conversation_id):
   try:
     db_connect()
-    docs = Conversation.conversation_messages(ObjectId(conversation_id))
-    return json.dumps(docs), 200
+    doc = Conversation.conversation_messages(ObjectId(conversation_id))
+    if doc == None:
+      return json.dumps({"error": "Document not found"}), 404
+    else: 
+      return json.dumps(doc), 200
   except DoesNotExist:
     return json.dumps({"error": "Document not found"}), 404
   except Exception as e:

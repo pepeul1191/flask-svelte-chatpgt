@@ -164,79 +164,174 @@ Diagrama de Base de Datos Relacional
 
 ```plantuml
 @startuml
-entity "levels" {
-    + id : INTEGER
-    + name : VARCHAR(30)
+
+entity play_styles {
+  * id : INTEGER <<PK>>
+  --
+  name : VARCHAR(30)
 }
 
-entity "body_parts" {
-    + id : INTEGER
-    + name : VARCHAR(30)
+entity sexs {
+  * id : INTEGER <<PK>>
+  --
+  name : VARCHAR(7)
 }
 
-entity "exercises" {
-    + id : INTEGER
-    + name : VARCHAR(40)
-    + image_url : VARCHAR(50)
-    + video_url : VARCHAR(80)
-    + description : TEXT
-    + body_part_id : INTEGER
+entity nations {
+  * id : INTEGER <<PK>>
+  --
+  name : VARCHAR(40)
 }
 
-entity "members" {
-    + id : INTEGER
-    + code : INTEGER
-    + dni : VARCHAR(8)
-    + names : VARCHAR(30)
-    + last_names : VARCHAR(45)
-    + email : VARCHAR(50)
-    + phone : VARCHAR(30)
-    + image_url : VARCHAR(50)
-    + level_id : INTEGER
+entity positions {
+  * id : INTEGER <<PK>>
+  --
+  name : VARCHAR(10)
 }
 
-entity "users" {
-    + id : INTEGER
-    + user : VARCHAR(30)
-    + password : VARCHAR(30)
-    + member_id : INTEGER
-    + activation_key : VARCHAR(20)
-    + reset_key : VARCHAR(20)
+entity foots {
+  * id : INTEGER <<PK>>
+  --
+  name : VARCHAR(6)
 }
 
-entity "exercises_members" {
-    + id : INTEGER
-    + reps : INTEGER
-    + sets : INTEGER
-    + exercise_id : INTEGER
-    + member_id : INTEGER
+entity leagues {
+  * id : INTEGER <<PK>>
+  --
+  name : VARCHAR(30)
+  nation_id : INTEGER <<FK>>
 }
 
-entity "months" {
-    + id : INTEGER
-    + name : VARCHAR(15)
+entity teams {
+  * id : INTEGER <<PK>>
+  --
+  name : VARCHAR(40)
+  league_id : INTEGER <<FK>>
 }
 
-entity "years" {
-    + id : INTEGER
-    + name : INTEGER
+entity players {
+  * id : INTEGER <<PK>>
+  --
+  name : VARCHAR(60)
+  rank : INTEGER
+  weak_foot : INTEGER
+  skill_moves : INTEGER
+  height : INTEGER
+  weight : INTEGER
+  age : INTEGER
+  url : VARCHAR(120)
+  foot_id : INTEGER <<FK>>
+  sex_id : INTEGER <<FK>>
+  position_id : INTEGER <<FK>>
+  nation_id : INTEGER <<FK>>
+  team_id : INTEGER <<FK>>
 }
 
-entity "periods" {
-    + id : INTEGER
-    + year_id : INTEGER
-    + month_id : INTEGER
+entity common_details {
+  * id : INTEGER <<PK>>
+  --
+  overall : INTEGER
+  velocity : INTEGER
+  shooting : INTEGER
+  passing : INTEGER
+  dribbling : INTEGER
+  defending : INTEGER
+  physicality : INTEGER
+  player_id : INTEGER <<FK>>
 }
-levels --|{ members
-body_parts --|{ exercises
-members -- users
-members --{ exercises_members
-exercises --{ exercises_members
-years --{ periods
-months --{ periods
+
+entity goalkeeper_details {
+  * id : INTEGER <<PK>>
+  --
+  diving : INTEGER
+  handling : INTEGER
+  kicking : INTEGER
+  positioning : INTEGER
+  reflexes : INTEGER
+  player_id : INTEGER <<FK>>
+}
+
+entity players_play_styles {
+  * id : INTEGER <<PK>>
+  --
+  play_style_id : INTEGER <<FK>>
+  player_id : INTEGER <<FK>>
+}
+
+entity players_positions {
+  * id : INTEGER <<PK>>
+  --
+  position_id : INTEGER <<FK>>
+  player_id : INTEGER <<FK>>
+}
+
+' Relationships
+leagues }|..|| nations : "nation_id"
+teams }|..|| leagues : "league_id"
+players }|..|| foots : "foot_id"
+players }|..|| sexs : "sex_id"
+players }|..|| positions : "position_id"
+players }|..|| nations : "nation_id"
+players }|..|| teams : "team_id"
+common_details }|..|| players : "player_id"
+goalkeeper_details }|..|| players : "player_id"
+players_play_styles }|..|| play_styles : "play_style_id"
+players_play_styles }|..|| players : "player_id"
+players_positions }|..|| positions : "position_id"
+players_positions }|..|| players : "player_id"
+
 @enduml
 
 ```
+
+Diagrama de Secuencia al realizar preguntas.
+
+```plantuml
+@startuml
+@startuml
+actor Usuario
+participant "SvelteApp" as FR
+participant "Python Flask" as BE
+participant "SQLite DB" as DB1
+participant "Mongo DB" as DB2
+actor "OpenAI" as OAI
+
+Usuario -> FR : Escribe pregunta
+activate FR
+Usuario -> FR : Envía pregunta en \n Lenguaje Natural (LN)
+FR -> BE : Pregunta LN
+activate BE
+
+group Crear Contexto del Prompt
+  BE -> BE : Lee schema.sql
+  BE -> BE : Lee inserts.sql
+  BE -> BE : Junta pregunta con la \n información de los sql
+end
+
+BE -> OAI : Contexto + Pregunta LN
+
+activate OAI  
+  OAI -> BE : Consulta SQL
+deactivate OAI
+
+activate DB1  
+  BE -> DB1 : Ejecutar consulta SQL
+  DB1 -> BE : Result Set (RS)
+deactivate DB1
+
+activate DB2
+  BE -> DB2: Grabar consulta + RS
+  DB2 -> BE : ObjetcId
+deactivate DB2
+
+BE -> BE : Genera response
+
+BE --> FR : Devuelve respuesta
+deactivate BE
+FR --> Usuario : Muestra respuesta
+deactivate FR
+
+@enduml
 
 Preguntas de ejemplo:
 

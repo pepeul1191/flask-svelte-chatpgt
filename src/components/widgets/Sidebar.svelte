@@ -4,16 +4,18 @@
 </script>
 
 <style>
-
+.fa-futbol-o{
+  margin-right: 10px;
+}
 </style>
 
 <aside id="sidebar" class="js-sidebar">
   <!-- Content For Sidebar -->
   <div class="h-100">
     <div class="sidebar-logo">
-      <Logo size={12} color='#FFFFFF' styles={''}/>
+      <!-- <Logo size={12} color='#FFFFFF' styles={''}/> -->
       <a href="/">
-        ULima Journey
+        <i class="fa fa-futbol-o" aria-hidden="true"></i> FIFA Journey
       </a>
     </div>
     <ul class="sidebar-nav">
