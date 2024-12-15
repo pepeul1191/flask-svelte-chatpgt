@@ -3,6 +3,7 @@ CREATE TABLE players (
   id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   rank INTEGER,
   name VARCHAR(50),
+  sex VARCHAR(10),
   overall INTEGER,
   velocity INTEGER,
   shooting INTEGER,
@@ -11,17 +12,17 @@ CREATE TABLE players (
   defending INTEGER,
   physicality INTEGER,
   position VARCHAR(50),
+  alternative_positions VARCHAR(50),
   weak_foot INTEGER,
   skill_moves INTEGER,
-  preferred_foot VARCHAR(50),
+  foot VARCHAR(50),
   height INTEGER,
   weight INTEGER,
-  alternative_positions VARCHAR(50),
   age INTEGER,
   nation VARCHAR(50),
   league VARCHAR(50),
   team VARCHAR(50),
-  play_style VARCHAR(50),
+  play_styles VARCHAR(50),
   url VARCHAR(120),
   diving INTEGER,
   handling INTEGER,
@@ -31,4 +32,5 @@ CREATE TABLE players (
 );
 -- Dbmate schema migrations
 INSERT INTO "schema_migrations" (version) VALUES
-  ('20241215042500');
+  ('20241215042500'),
+  ('20241215140537');

@@ -23,6 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 vite.config.js.timestamp*
+*.csv#
 
 # python
 env
