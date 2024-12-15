@@ -10,7 +10,10 @@
     "start": "sirv public --no-clear",
     "dbmate:new": "npx dbmate -d \"db/migrations\" -e \"DB\" new ",
     "dbmate:up": "npx dbmate -d \"db/migrations\" -e \"DB\" up",
-    "dbmate:rollback": "npx dbmate -d \"db/migrations\" -e \"DB\" rollback"
+    "dbmate:rollback": "npx dbmate -d \"db/migrations\" -e \"DB\" rollback",
+    "dbmate:new2": "npx dbmate -d \"db/migrations2\" -e \"DB2\" new ",
+    "dbmate:up2": "npx dbmate -d \"db/migrations2\" -e \"DB2\" up",
+    "dbmate:rollback2": "npx dbmate -d \"db/migrations2\" -e \"DB2\" rollback"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.0",

@@ -36,6 +36,12 @@ Migraciones con DBMATE - app:
     $ dbmate -d "db/migrations" -e "DB" up
     $ dbmate -d "db/migrations" -e "DB" rollback
 
+Migraciones con DBMATE - app2:
+
+    $ dbmate -d "db/migrations" -e "DB2" new <<nombre_de_migracion>>
+    $ dbmate -d "db/migrations" -e "DB2" up
+    $ dbmate -d "db/migrations" -e "DB2" rollback
+
 Backup SQLite
 
     $ sqlite3 app.db .dump > dbname.bak

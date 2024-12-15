@@ -12,3 +12,5 @@ PyJWT
 Flask-Session
 langchain-openai
 SQLAlchemy>=2.0.0
+pandas
+numpy

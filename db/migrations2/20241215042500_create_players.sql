@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(128) primary key);
+-- migrate:up
+
 CREATE TABLE players (
   id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   rank INTEGER,
@@ -21,14 +22,18 @@ CREATE TABLE players (
   nation VARCHAR(50),
   league VARCHAR(50),
   team VARCHAR(50),
-  play_style VARCHAR(50),
+  play_styles VARCHAR(50),
   url VARCHAR(120),
   diving INTEGER,
   handling INTEGER,
   kicking INTEGER,
   positioning INTEGER,
-  reflexes INTEGER
+  reflexes INTEGER,
+  sex VARCHAR(10)
 );
--- Dbmate schema migrations
-INSERT INTO "schema_migrations" (version) VALUES
-  ('20241215042500');
+
+-- migrate:down
+
+DROPT TABLE players;
+
+{skill_moves}, {heigth}, {weight}, {url}, {foot_id}, {sex_id}, {position_id}, {nation_id}, {team_id}, {age}
