@@ -25,6 +25,7 @@ def openai_answer(question):
     # return input_message
     ## OpenAI
     load_dotenv()
+    '''
     os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY')
     llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.5)
     ## generate query
@@ -35,7 +36,7 @@ def openai_answer(question):
       FROM players 
       JOIN nations ON players.nation_id = nations.id 
       WHERE players.sex_id = 1 LIMIT 5;"""
-    '''
+    
     # do query to relational db
     columns = []
     result_set = []
