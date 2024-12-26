@@ -22,6 +22,7 @@ CREATE TABLE players (
   age INTEGER,
   nation VARCHAR(50),
   league VARCHAR(50),
+  nation_league VARCHAR(50),
   team VARCHAR(50),
   play_styles VARCHAR(50),
   url VARCHAR(120),

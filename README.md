@@ -23,12 +23,13 @@ Arrancar aplicación:
 
 Archivo <b>.env</b>
 
-    DB=sqlite:db/app.db
-    SQALCHEMY_CONNECTION_STRING=sqlite:///db/app.db
-    ENV=local||replit
-    OPENAI_API_KEY=xyz
-    EMAIL_SENDER=correo@correo.com
-    EMAIL_PASSWORD=123
+    OPENAI_API_KEY=XYZ
+    OPENAI_API=false||true
+    DB1=sqlite3:db/fifa25v1.db
+    DB2=sqlite3:db/fifa25v2.db
+    DB3=sqlite3:db/fifa25v3.db
+    DB_VERSION=1||2|||3
+    ENV=local
 
 Migraciones con DBMATE - app:
 

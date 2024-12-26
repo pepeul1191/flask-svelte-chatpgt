@@ -1,4 +1,3 @@
-CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(128) primary key);
 CREATE TABLE players (
   id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   rank INTEGER,
@@ -21,6 +20,7 @@ CREATE TABLE players (
   age INTEGER,
   nation VARCHAR(50),
   league VARCHAR(50),
+  nation_league VARCHAR(50),
   team VARCHAR(50),
   play_styles VARCHAR(50),
   url VARCHAR(120),
@@ -30,7 +30,3 @@ CREATE TABLE players (
   positioning INTEGER,
   reflexes INTEGER
 );
--- Dbmate schema migrations
-INSERT INTO "schema_migrations" (version) VALUES
-  ('20241215042500'),
-  ('20241215140537');

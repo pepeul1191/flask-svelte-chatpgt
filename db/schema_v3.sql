@@ -1,4 +1,3 @@
-CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(128) primary key);
 CREATE TABLE dim_locations (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   league_name	VARCHAR(80),
@@ -40,18 +39,11 @@ CREATE TABLE fact_events (
     ranking INTEGER,
     height INTEGER,
     weight INTEGER,
-    age INTEGER,
+    age INTEGER, -- es la edad de un jugador (dim_players)
     FOREIGN KEY (location_id) REFERENCES dim_locations (id),
     FOREIGN KEY (player_id) REFERENCES dim_players (id),
     FOREIGN KEY (skill_id) REFERENCES dim_skills (id)
 );
--- Dbmate schema migrations
-INSERT INTO "schema_migrations" (version) VALUES
-  ('20241226172550'),
-  ('20241226173212'),
-  ('20241226173220'),
-  ('20241226173230'),
-  ('20241226174532'),
-  ('20241226174541'),
-  ('20241226174547'),
-  ('20241226174555');
+
+
+La edad del jugador (dim_players) se encuentra en la columna age de la tabla fact_events

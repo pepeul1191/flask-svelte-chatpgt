@@ -1,6 +1,8 @@
+import os
 from mongoengine import connect
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
 
 # mongodb
 def to_dict(document):
@@ -19,5 +21,7 @@ def db_connect():
   )
 
 # relational db
-engine = create_engine('sqlite:///db/app.db')  # Cambia a tu DB
+load_dotenv()
+db_version = os.getenv('DB_VERSION')
+engine = create_engine(f"sqlite:///db/fifa25v{db_version}.db")  # Cambia a tu DB
 Session = sessionmaker(bind=engine)
