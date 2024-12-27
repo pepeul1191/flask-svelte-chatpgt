@@ -167,178 +167,29 @@ db.conversations.aggregate([
 ]);
 ```
 
-Diagrama de Base de Datos Relacional
+# Base de Datos v1
 
-```plantuml
-@startuml
+Diagrama de Base de Datos
 
-entity play_styles {
-  * id : INTEGER <<PK>>
-  --
-  name : VARCHAR(30)
-}
+![Diagrama de Base de Datos v1](https://planttext.com/plantuml/png/dLRRQi9047tVhrZoqWielT62Y2Z5NYYK8gMlOJLZicHp8RjQfVhltIIRc6oYINmHd3apP-RipEYO2nA9bSSG0bzGiSKX8rkJYoq3ZlyGnjUOMdY0tp-_fw_J6HuElpv68sdlzUI7JpoGpf_9xFbjChkylxb2-pmJXqtt54_533uHDF2x9taerH46d9wNvxQKPna4edkEns8A1iHUdIaiLdAOMjXB77QW442yynJ3ghm6WdX083f3Y8GY8hvxY926No2k6KjRidANCcPwmLgALRGxG6r7Q0ag9c93wVigOiLNlKigYJbhMyNnv1xnPBDqn7tYXN3oCWtQBWBFa_4M249P2ucbFX5XhDJi6bYmY9ELz7HajzItIyQGSAxRh8ZEvwnYXINuLYNUsNAw84mdIoUaeLKx8Cm522MmTRiMNUirECItAkMwTE5MYbKlfziZM3BOQ6FMgWEr26QdYta07vkmJjJjJrl3v9wclS0pOEanTcZ8KNR7zhj-VxVBx_G06_a662YzH0gIHKX8VcKCbDqI1Kelh8IetQm0afyKwKyNjE8-o24nXOOhmFg2DL1QluIenJMGjfuPgmgBEJCL3LGptoVnTTDK2CXCAYWVeSR04qovMctbgmcfPK1ZUItaduf_)
 
-entity sexs {
-  * id : INTEGER <<PK>>
-  --
-  name : VARCHAR(7)
-}
 
-entity nations {
-  * id : INTEGER <<PK>>
-  --
-  name : VARCHAR(40)
-}
+# Base de Datos v2
 
-entity positions {
-  * id : INTEGER <<PK>>
-  --
-  name : VARCHAR(10)
-}
+Diagrama de Base de Datos
 
-entity foots {
-  * id : INTEGER <<PK>>
-  --
-  name : VARCHAR(6)
-}
+![Diagrama de Base de Datos v2](https://planttext.com/plantuml/png/PP9DZiCW38NtEGNdwAetGMvmWXK78kpGHgEv-r1rQ9sPdJ__wVd1LHIAxYiF0oObFTp6S60HzpKuH-7YA6cB2gIbnmbMlBWAPOnG6Wi-BEQA1PXxTqNEOrlSMMBEIcdkl868mL3eTcERm0bJi0Fn41g1pSuj2odbP6K0AvO4IXLzhujjk2CiVcfYtieMOlPhqoyzzIf_PYBI7Dy3znF1Z1-7_gfXX7a_kVRgyVyBYh1QVZw85pqOJ_BtmXO3LUDHX1IiYGkDYxNmrm-JAZWnFlhbtyDmRQwtV_43)
 
-entity leagues {
-  * id : INTEGER <<PK>>
-  --
-  name : VARCHAR(30)
-  nation_id : INTEGER <<FK>>
-}
 
-entity teams {
-  * id : INTEGER <<PK>>
-  --
-  name : VARCHAR(40)
-  league_id : INTEGER <<FK>>
-}
+# Base de Datos v3
 
-entity players {
-  * id : INTEGER <<PK>>
-  --
-  name : VARCHAR(60)
-  rank : INTEGER
-  weak_foot : INTEGER
-  skill_moves : INTEGER
-  height : INTEGER
-  weight : INTEGER
-  age : INTEGER
-  url : VARCHAR(120)
-  foot_id : INTEGER <<FK>>
-  sex_id : INTEGER <<FK>>
-  position_id : INTEGER <<FK>>
-  nation_id : INTEGER <<FK>>
-  team_id : INTEGER <<FK>>
-}
+Diagrama de Base de Datos
 
-entity common_details {
-  * id : INTEGER <<PK>>
-  --
-  overall : INTEGER
-  velocity : INTEGER
-  shooting : INTEGER
-  passing : INTEGER
-  dribbling : INTEGER
-  defending : INTEGER
-  physicality : INTEGER
-  player_id : INTEGER <<FK>>
-}
-
-entity goalkeeper_details {
-  * id : INTEGER <<PK>>
-  --
-  diving : INTEGER
-  handling : INTEGER
-  kicking : INTEGER
-  positioning : INTEGER
-  reflexes : INTEGER
-  player_id : INTEGER <<FK>>
-}
-
-entity players_play_styles {
-  * id : INTEGER <<PK>>
-  --
-  play_style_id : INTEGER <<FK>>
-  player_id : INTEGER <<FK>>
-}
-
-entity players_positions {
-  * id : INTEGER <<PK>>
-  --
-  position_id : INTEGER <<FK>>
-  player_id : INTEGER <<FK>>
-}
-
-' Relationships
-leagues }|..|| nations : "nation_id"
-teams }|..|| leagues : "league_id"
-players }|..|| foots : "foot_id"
-players }|..|| sexs : "sex_id"
-players }|..|| positions : "position_id"
-players }|..|| nations : "nation_id"
-players }|..|| teams : "team_id"
-common_details }|..|| players : "player_id"
-goalkeeper_details }|..|| players : "player_id"
-players_play_styles }|..|| play_styles : "play_style_id"
-players_play_styles }|..|| players : "player_id"
-players_positions }|..|| positions : "position_id"
-players_positions }|..|| players : "player_id"
-
-@enduml
-
-```
+![Diagrama de Base de Datos v3](https://planttext.com/plantuml/png/VLDDRuCm3BtpApXkbwghfcdYr7yIkSI0XGbL4XXexBylvTCWjRVu-Vd5VawkpeFrJSLHXCQJxsDDbU8w1K-rSV5l5CUaavYC3oT6o1jK1YfCuXPiMe1z-pw_XvGP2zGBXaUeNfHkwCSvm7-xXbn9pCTkihhsikgXTQyTxTK-HnmxRq4jMRUbB-SnxtpFU8JtFTmPUhJ79lO3VKrYs1txQYmBwB8Jpo3r2jiGJUAB-sgxPRfR0ACX8gvRjC2yX2q6aQ2zqelW5PbyrGFdHAWjtMui0SpGQ5bGz8vIOA6fgHM40eoM2YMbfQoVdHUGnOonUvWkHwh292lqWr2gQSrp3HYfMY3bXT_OCe8SfsCmMZey3AVJC1oUUI9DVqPV7a2ohUCPTNwloRgdABe6GyC_-mS0)
 
 Diagrama de Secuencia al realizar preguntas.
 
-```plantuml
-@startuml
-@startuml
-actor Usuario
-participant "SvelteApp" as FR
-participant "Python Flask" as BE
-participant "SQLite DB" as DB1
-participant "Mongo DB" as DB2
-actor "OpenAI" as OAI
-
-Usuario -> FR : Escribe pregunta
-activate FR
-Usuario -> FR : Envía pregunta en \n Lenguaje Natural (LN)
-FR -> BE : Pregunta LN
-activate BE
-
-group Crear Contexto del Prompt
-  BE -> BE : Lee schema.sql
-  BE -> BE : Lee inserts.sql
-  BE -> BE : Junta pregunta con la \n información de los sql
-end
-
-BE -> OAI : Contexto + Pregunta LN
-
-activate OAI  
-  OAI -> BE : Consulta SQL
-deactivate OAI
-
-activate DB1  
-  BE -> DB1 : Ejecutar consulta SQL
-  DB1 -> BE : Result Set (RS)
-deactivate DB1
-
-activate DB2
-  BE -> DB2: Grabar consulta + RS
-  DB2 -> BE : ObjetcId
-deactivate DB2
-
-BE -> BE : Genera response
-
-BE --> FR : Devuelve respuesta
-deactivate BE
-FR --> Usuario : Muestra respuesta
-deactivate FR
-
-@enduml
+![Diagrama de Secuencia al realizar pregunta](https://planttext.com/plantuml/png/PLFDJW8n4BxtAIQSD4OJzyZ12886iu92l7aPbX6BfQtzsUX3UV8HV36dXOL5JfljzpUTcLxxW2x4jH9O1UFWsKTqqWZBfxAI5dM0pgmc5QXdRGVGm-tq47ty2cz6mwr2_vu9_U4_-LCf0y6Wdz51__8GVZ1wQVPeiQsaCx6aUwDyEkcDXDYM1kTNN09qOUWh9-S4rj4owe199sla9AxmYAphts_SSO4ql6WeIIyZhWZ66A931IVb-5ImW6Nz8SiU6tuvtjlp_SJIcMZXnX4wk34wq6Smi2352hEsGK3IDoub4VZgZTPuuJ_KCIQr9nVyCNYVitT5LzncXQbmgL-DMsCbVtyqnu8o7fAQz4A8ZG7tZ1rsjPqTt6L_cKG3JatV9fP5FYfcykJ4WjhSbf87cPMRkFJ7RLvH5NcZKgbx2yXeupwbXC2C0fnCPwVjWBGRxO2YPLzquSxXlErz1jDPDYzsvfFvYa8rMXow5arJCkUED3a4Hzwo4ssmPb46L4TIDMKu4Z-FjXMFFcq7avi5wy93OctzZWIyYkAQfy8lx0y0=)
 
 Preguntas de ejemplo:
 
