@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 import json
 import traceback
+import os
+from dotenv import load_dotenv
 from bson import ObjectId
 from datetime import datetime
 from admin.database import db_connect
@@ -27,12 +29,14 @@ def ask():
       answer = ai_answer['data']
       db_connect()
       message_id = ObjectId()
+      load_dotenv()
       message = Message(
         id = message_id,
         question = question,
         answer = answer,
         error = False,
-        created_at = datetime.now()
+        created_at = datetime.now(),
+        db_version = os.getenv('DB_VERSION')
       )
       message.save()
       # add message to conversation if conversation not exist, else, create conversation and add message

@@ -25,3 +25,6 @@ INSERT INTO play_styles (id, name) VALUES (8, 'Aerial');
 INSERT INTO play_styles (id, name) VALUES (9, 'Bruiser');
 INSERT INTO play_styles (id, name) VALUES (10, 'Long Ball Pass');
 INSERT INTO play_styles (id, name) VALUES (11, 'Power Shot'); -- tambien conocido como pulpo
+
+Consideraciones adicionales:
+Si queremos saber el país(nation) de un equipo, tenemos que hacer un join pasando por la liga del equipo.

@@ -119,12 +119,13 @@ class Conversation(Document):
               },
               "question": "$message_details.question",
               "error": "$message_details.error",
+              "db_version": "$message_details.db_version",
               "created_at": {
                 "$dateToString": {
                   "format": "%d/%m/%Y %H:%M:%S",
                   "date": "$message_details.created_at"
                 }
-              }
+              },
             }
           }
         }

@@ -46,4 +46,6 @@ CREATE TABLE fact_events (
 );
 
 
-La edad del jugador (dim_players) se encuentra en la columna age de la tabla fact_events
+La edad del jugador (dim_players) se encuentra en la columna age de la tabla fact_events.
+
+el sexo del jugador se encuentra en dim_players y no en fact_events

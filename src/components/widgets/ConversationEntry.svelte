@@ -13,6 +13,7 @@
   onMount(() => {
     columns = message.answer.columns;
     data = message.answer.result_set;
+    console.log(message)
     setRows();
     if(pagination.numberPages == 1){
       pagination.show = false;
@@ -86,14 +87,19 @@
   };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString); 
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses son de 0 a 11
-    const year = date.getFullYear();
-    return `${hours}:${minutes}:${seconds} - ${day}/${month}/${year}`;
+    const regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})?$/;
+    if(regex.test(dateString)){
+      const date = new Date(dateString); 
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses son de 0 a 11
+      const year = date.getFullYear();
+      return `${hours}:${minutes}:${seconds} - ${day}/${month}/${year}`;
+    }else{
+      return dateString;
+    }
   }
 </script>
 

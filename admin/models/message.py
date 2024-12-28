@@ -1,4 +1,4 @@
-from mongoengine import DateTimeField, BooleanField, EmbeddedDocument, Document, ObjectIdField, StringField, EmbeddedDocumentField
+from mongoengine import DateTimeField, BooleanField, FloatField, Document, ObjectIdField, StringField, EmbeddedDocumentField
 from bson import ObjectId
 from datetime import datetime
 from admin.models.answer import Answer
@@ -9,6 +9,7 @@ class Message(Document):
   answer = EmbeddedDocumentField(Answer)
   error = BooleanField()
   created_at = DateTimeField(default=datetime.utcnow)
+  db_version = FloatField()
   meta = {
     'collection': 'messages'  # Nombre de la colección a la que deseas mapear
   }
