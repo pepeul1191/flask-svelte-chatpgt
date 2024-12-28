@@ -83,15 +83,17 @@
   }
 
   const updateName = () => {
-    
-  }
-
-  const editSQL = () =>{
-    editSQLModal.show();
-  }
-
-  const closeEditSQL = () => {
-    editSQLModal.hide();
+    console.log(_id);
+    console.log(conversationName);
+    axios.post(`/api/v1/conversations/${_id}`, {
+      name: conversationName,
+    })
+      .then(response => {
+        console.log('Respuesta recibida:', response.data);
+      })
+      .catch(error => {
+        console.error('Error en la solicitud:', error);
+      });
   }
 </script>
 

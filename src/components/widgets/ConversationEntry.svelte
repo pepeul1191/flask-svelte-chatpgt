@@ -21,7 +21,6 @@
       pagination.show = false;
     }
     editSQLModal = new Modal(document.getElementById(editSQLModalId));
-    console.log(message.answer);
   });
 
   let pagination = {
