@@ -196,6 +196,21 @@ Preguntas de ejemplo:
 + lista de miembros
 + nombres de ejercisios y cantidad de ejercicios asignados a cuantos miembros agrupados por ejercicio
 
+# Migracion de DB2 a DB3
+
+```sql
+-- dim players
+SELECT id, name, sex, url  FROM players;
+-- dim skills
+SELECT id, foot, position, alternative_positions AS extra_positions, styles FROM players;
+-- dim locations
+SELECT id, league AS league_name, nation_league AS nation_league_name, team AS team_name, nation FROM players;
+-- fact_events
+SELECT id AS location_id, id AS player_id, id AS skill_id, overall, velocity, shooting, passing, dribbling,
+defending, physicality, diving, handling, kicking, positioning, reflexes, skill_moves, weak_foot, rank AS ranking, 
+height, weight, age FROM players;
+```
+
 ---
 
 Fuentes:

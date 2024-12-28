@@ -273,5 +273,5 @@ fact_events ||..|| dim_skills : skill_id
   FR --> Usuario : Muestra respuesta
   deactivate FR
 
-  @enduml
+@enduml
 ```
