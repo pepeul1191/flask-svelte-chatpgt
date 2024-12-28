@@ -85,6 +85,14 @@
   const updateName = () => {
     
   }
+
+  const editSQL = () =>{
+    editSQLModal.show();
+  }
+
+  const closeEditSQL = () => {
+    editSQLModal.hide();
+  }
 </script>
 
 <svelte:head>
@@ -116,7 +124,7 @@
 </div>
 
 {#each conversationEntries as entry}
-  <ConversationEntry message={entry} conversation_id={_id} />
+  <ConversationEntry message={entry} conversationId={_id} />
 {/each}
 
 <Prompt 

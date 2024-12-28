@@ -1,23 +1,27 @@
 <script>
   import { onMount } from 'svelte';
   import * as XLSX from 'xlsx';
-  
+  import { Modal } from 'bootstrap';
+
   export let message = {};
   export let conversationId = '';
   let data = [];
   let columns = [];
   let rows = [];
+  let editSQLModal;
+  let editSQLModalId = `editSQLModal-${Math.random().toString(36).substring(2, 12)}`;
 
   // {"_id": ObjectId, "question": String, "answer": {"_id": "670807559d305cfce425ffb7", "query": "SELECT players.name AS player_name, nations.name AS nation_name \n      FROM players \n      JOIN nations ON players.nation_id = nations.id \n      WHERE players.sex_id = 1 LIMIT 100;", "result_set": []}, "error": false, "created": "2024-10-10T11:56:53.962988"}
 
   onMount(() => {
     columns = message.answer.columns;
     data = message.answer.result_set;
-    console.log(message)
     setRows();
     if(pagination.numberPages == 1){
       pagination.show = false;
     }
+    editSQLModal = new Modal(document.getElementById(editSQLModalId));
+    console.log(message.answer);
   });
 
   let pagination = {
@@ -101,12 +105,21 @@
       return dateString;
     }
   }
+
+  const editSQL = () =>{
+    editSQLModal.show();
+  }
+
+  const closeEditSQL = () => {
+    editSQLModal.hide();
+  }
 </script>
 
 <div class="row question-row">
   <span class="card question-card border-0 conversations">
     {message.question}<br>
-    <p class="small">{formatDate(message.created_at)}</p>
+    <p class="small">{formatDate(message.created_at)} {#if message.db_version} - (db version: {message.db_version})
+    {/if}</p>
   </span>
 </div>
 
@@ -145,7 +158,7 @@
               <button class="btn btn-secondary" on:click={downloadReport} style="margin-right: 10px;">
                 <i class="fa fa-download" aria-hidden="true" style="margin-right: 5px;"></i>Descargar
               </button>
-              <button class="btn btn-warning" on:click={downloadReport} style="margin-right: 10px;">
+              <button class="btn btn-warning" on:click={editSQL} style="margin-right: 10px;">
                 <i class="fa fa-code" aria-hidden="true" style="margin-right: 5px;"></i>Editar SQL
               </button>
               <button class="btn btn-danger" on:click={downloadReport} style="margin-right: 10px;">
@@ -186,6 +199,25 @@
   </table>
 </div>
 
+<!-- MODALS-->
+
+<div class="modal fade" id="{editSQLModalId}" tabindex="-1" aria-labelledby="sqlModalLabel-{editSQLModalId}" aria-hidden="true">
+  <div class="modal-dialog modal-xl" style="max-width: 90%; height: 90vh;"> <!-- Ajuste de tamaño personalizado -->
+    <div class="modal-content" style="height: 100%;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sqlModalLabel-{editSQLModalId}">Editar SQL</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" on:click={closeEditSQL}></button>
+      </div>
+      <div class="modal-body" style="overflow-y: auto;"> <!-- Añadido scroll si es necesario -->
+        <textarea class="form-control textarea-full-height" rows="0">{message.answer.query}</textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa fa-pencil" aria-hidden="true" style="margin-right: 5px;"></i>Editar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" on:click={closeEditSQL}><i class="fa fa-times" aria-hidden="true" style="margin-right: 5px;"></i>Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <style>
   .conversations {
     flex: 1; /* Toma el espacio disponible */
@@ -266,5 +298,10 @@
   .tfoot-area{
     padding-top: 5px !important;
     padding-bottom: 5px !important;
+  }
+
+  .textarea-full-height {
+    height: 100%; /* Esto hará que el textarea tome el 100% de la altura de su contenedor padre */
+    box-sizing: border-box; /* Incluye el padding y el border en la altura total del elemento */
   }
 </style>
