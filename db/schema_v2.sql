@@ -22,7 +22,7 @@ CREATE TABLE players (
   league VARCHAR(50),
   nation_league VARCHAR(50),
   team VARCHAR(50),
-  play_styles VARCHAR(50),
+  styles VARCHAR(50),
   url VARCHAR(120),
   diving INTEGER,
   handling INTEGER,

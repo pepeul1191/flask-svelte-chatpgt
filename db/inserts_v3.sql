@@ -3,3 +3,5 @@ En la columna position de la tabla dim_skills los el valor 'CAM' significa medio
 En la columna play_styles 'Power Shot' significa pulpo
 
 OJO: si se te pregunta por la edad de un jugador, este dato no se encuentra en la tabla dim_players sino en fact_events en la columna age
+
+Si quiero el rango de edades de los jugadores, este rango empiezen de 16 años y va en 5 en 5

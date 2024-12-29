@@ -29,7 +29,7 @@
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link" href="/" on:click|preventDefault={() => {navigate('/conversations')}}>
-          Conversaiones
+          Conversaciones
         </a>
       </li>
       <li class="sidebar-item">

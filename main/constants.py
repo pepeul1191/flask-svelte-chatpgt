@@ -8,8 +8,8 @@ ENV = os.getenv('ENV')
 
 if ENV == 'local':
   CONSTANTS = {
-    'base_url': 'http://localhost:5000/',
-    'static_url': 'http://localhost:5000/',
+    'base_url': 'http://192.168.1.22:5000/',
+    'static_url': 'http://192.168.1.22:5000/',
   }
   SECRET_KEY = 'my_secret_key'
 elif ENV == 'ulima':
